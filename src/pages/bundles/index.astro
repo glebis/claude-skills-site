@@ -1,0 +1,150 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const bundles = await getCollection("bundles");
+const allSkills = await getCollection("skills");
+
+const bundlesWithSkills = bundles
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((bundle) => {
+    const skills = allSkills.filter((s) => bundle.data.skills.includes(s.id));
+    return { bundle, skills };
+  });
+---
+
+<Base title="Cabinets">
+  <section class="container" style="padding-top:3rem;padding-bottom:3rem;">
+    <h1>Cabinets</h1>
+    <p class="state-line">8 curated sets. Each cabinet solves a class of problem.</p>
+
+    <div style="display:flex;flex-direction:column;gap:2rem;margin-top:2rem;">
+      {
+        bundlesWithSkills.map(({ bundle, skills }) => (
+          <a href={`/bundles/${bundle.id}`} class="cabinet-card">
+            <div class="cabinet-layout">
+              {bundle.data.hero_image && (
+                <div class="cabinet-image">
+                  <img src={bundle.data.hero_image} alt={bundle.data.apothecary_name} />
+                </div>
+              )}
+              <div class="cabinet-content">
+                <div style="display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.4rem;">
+                  <span class="cabinet-roman">{bundle.data.roman}</span>
+                  <h2 class="cabinet-name">{bundle.data.apothecary_name}</h2>
+                </div>
+                <p class="cabinet-tagline">{bundle.data.tagline}</p>
+                <div class="cabinet-skills">
+                  {skills.map((s) => (
+                    <span class="cabinet-skill-tag">{s.data.name}</span>
+                  ))}
+                </div>
+                <p class="cabinet-install">
+                  First: <code>/plugin marketplace add glebis/claude-skills</code>
+                </p>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabinet-card {
+    display: block;
+    background: var(--bg-surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .cabinet-card:hover {
+    border-color: var(--rule-hover);
+    box-shadow: 0 4px 30px var(--accent-glow);
+  }
+  .cabinet-card:hover .cabinet-name {
+    color: var(--accent);
+  }
+
+  .cabinet-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 0;
+  }
+  @media (max-width: 800px) {
+    .cabinet-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cabinet-image {
+    overflow: hidden;
+    max-height: 200px;
+  }
+  .cabinet-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(15%) contrast(1.05);
+    transition: filter 0.3s ease;
+  }
+  .cabinet-card:hover .cabinet-image img {
+    filter: sepia(5%) contrast(1.1);
+  }
+
+  .cabinet-content {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cabinet-roman {
+    font-family: "Monaspace Argon", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+  .cabinet-name {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    transition: color 0.2s ease;
+  }
+  .cabinet-tagline {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .cabinet-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+  .cabinet-skill-tag {
+    font-family: "Monaspace Argon", monospace;
+    font-size: 0.58rem;
+    color: var(--ink-muted);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.1rem 0.4rem;
+    letter-spacing: 0.01em;
+  }
+  .cabinet-card:hover .cabinet-skill-tag {
+    border-color: var(--rule-light);
+  }
+
+  .cabinet-install {
+    font-family: "Monaspace Argon", monospace;
+    font-size: 0.6rem;
+    color: var(--ink-dim);
+  }
+  .cabinet-install code {
+    color: var(--accent-dim);
+  }
+</style>

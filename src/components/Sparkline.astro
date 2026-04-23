@@ -1,0 +1,42 @@
+---
+interface Props {
+  data: number[];
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const { data, width = 80, height = 20, color = "var(--accent)" } = Astro.props;
+
+const max = Math.max(...data, 1);
+const padX = 1;
+const padY = 2;
+const innerW = width - padX * 2;
+const innerH = height - padY * 2;
+
+const points = data.map((v, i) => {
+  const x = padX + (i / (data.length - 1)) * innerW;
+  const y = padY + innerH - (v / max) * innerH;
+  return `${x.toFixed(1)},${y.toFixed(1)}`;
+}).join(" ");
+
+const lastX = padX + innerW;
+const lastY = padY + innerH - (data[data.length - 1] / max) * innerH;
+
+const hasActivity = data.some(v => v > 0);
+---
+
+{hasActivity && (
+  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style="display:inline-block;vertical-align:middle;">
+    <polyline
+      points={points}
+      fill="none"
+      stroke={color}
+      stroke-width="1.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.7"
+    />
+    <circle cx={lastX} cy={lastY} r="1.5" fill={color} opacity="0.9" />
+  </svg>
+)}

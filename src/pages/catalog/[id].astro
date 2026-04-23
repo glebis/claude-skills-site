@@ -1,0 +1,108 @@
+---
+import Base from "../../layouts/Base.astro";
+import Sparkline from "../../components/Sparkline.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const skills = await getCollection("skills");
+  return skills.map((skill) => ({ params: { id: skill.id }, props: { skill } }));
+}
+
+const { skill } = Astro.props;
+const { Content } = await render(skill);
+---
+
+<Base title={skill.data.name}>
+  <article class="container-narrow" style="padding-top:3rem;padding-bottom:3rem;">
+    <a href="/catalog" class="back-link">← Back to Catalog</a>
+
+    <header class="skill-header">
+      <h1>{skill.data.name}</h1>
+      {skill.data.tagline && (
+        <p class="tagline">{skill.data.tagline}</p>
+      )}
+    </header>
+
+    {skill.data.hero_image && (
+      <img src={skill.data.hero_image} alt={skill.data.name} class="hero-image" />
+    )}
+
+    <div class="ornament"></div>
+
+    <aside class="dispensary">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Dispensary Notes</h3>
+        {skill.data.auto_activity.length > 0 && (
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="font-family:'Monaspace Argon',monospace;font-size:0.6rem;color:var(--ink-dim);">12w activity</span>
+            <Sparkline data={skill.data.auto_activity} width={100} height={24} />
+          </div>
+        )}
+      </div>
+
+      <dl style="display:grid;grid-template-columns:140px 1fr;gap:0.75rem 1rem;">
+        {skill.data.apothecary_name && (
+          <>
+            <dt>Also Known As</dt>
+            <dd style="font-style:italic;">{skill.data.apothecary_name}</dd>
+          </>
+        )}
+
+        {skill.data.bundle !== "uncategorized" && (
+          <>
+            <dt>Cabinet</dt>
+            <dd><a href={`/bundles/${skill.data.bundle}`}>{skill.data.bundle}</a></dd>
+          </>
+        )}
+
+        {skill.data.tags.length > 0 && (
+          <>
+            <dt>Properties</dt>
+            <dd style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              {skill.data.tags.map((tag) => (
+                <a href={`/catalog?tag=${tag}`} class="tag" style="cursor:pointer;">{tag}</a>
+              ))}
+            </dd>
+          </>
+        )}
+
+        {skill.data.dependencies.length > 0 && (
+          <>
+            <dt>Required Reagents</dt>
+            <dd>{skill.data.dependencies.join(", ")}</dd>
+          </>
+        )}
+
+        {skill.data.auto_triggers.length > 0 && (
+          <>
+            <dt>Triggers</dt>
+            <dd>{skill.data.auto_triggers.join(", ")}</dd>
+          </>
+        )}
+
+        {skill.data.repo_path && (
+          <>
+            <dt>Source</dt>
+            <dd>
+              <a href={`https://github.com/glebis/claude-skills/tree/main/${skill.data.repo_path}`} target="_blank">
+                {skill.data.repo_path}/
+              </a>
+            </dd>
+          </>
+        )}
+
+        <dt>Install</dt>
+        <dd>
+          <code class="install-cmd">/plugin install {skill.id}@glebis-skills</code>
+        </dd>
+
+        {skill.data.auto_last_synced && (
+          <>
+            <dt>Last Synced</dt>
+            <dd>{skill.data.auto_last_synced}</dd>
+          </>
+        )}
+      </dl>
+    </aside>
+  </article>
+</Base>

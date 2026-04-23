@@ -1,0 +1,421 @@
+/* ── Apothecary Design System ──
+   Tufte principles (high data-ink ratio, typography-first, sidenotes)
+   inverted into a dark apothecary palette.
+   Fonts: EB Garamond (prose) + Monaspace Argon (numbers, code, tags) */
+
+@font-face {
+  font-family: "Monaspace Argon";
+  src: url("https://cdn.jsdelivr.net/gh/githubnext/monaspace@v1.101/fonts/webfonts/MonaspaceArgon-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Monaspace Argon";
+  src: url("https://cdn.jsdelivr.net/gh/githubnext/monaspace@v1.101/fonts/webfonts/MonaspaceArgon-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0e0c0a;
+  --bg-surface: #16130f;
+  --bg-raised: #1e1a14;
+  --bg-aside: #1a1710;
+
+  --ink: #d4c8b0;
+  --ink-light: #a89878;
+  --ink-muted: #6e6050;
+  --ink-dim: #4a4030;
+
+  --accent: #c89040;
+  --accent-dim: #8a6428;
+  --accent-glow: rgba(200, 144, 64, 0.12);
+  --accent-glow-strong: rgba(200, 144, 64, 0.25);
+
+  --rule: #2a2418;
+  --rule-light: #3a3020;
+  --rule-hover: #504030;
+
+  --cabinet-amber: #c89040;
+  --cabinet-teal: #4a9a8a;
+  --cabinet-burgundy: #8a3a3a;
+  --cabinet-indigo: #5a6aaa;
+  --cabinet-violet: #7a5a9a;
+  --cabinet-green: #4a7a4a;
+  --cabinet-copper: #b07040;
+  --cabinet-crimson: #9a3030;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Base typography ── */
+body {
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+  font-family: "Monaspace Argon", "JetBrains Mono", monospace;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* ── Typography scale ── */
+h1 {
+  font-size: 2.4rem;
+  font-weight: 400;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 400;
+  font-variant: small-caps;
+  color: var(--ink-light);
+}
+
+.state-line {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--ink-light);
+  line-height: 1.5;
+  margin: 1rem 0 2rem;
+}
+
+/* ── Links ── */
+.link {
+  color: var(--accent);
+  transition: color 0.2s ease;
+  border-bottom: 1px solid var(--accent-dim);
+}
+.link:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink-muted);
+}
+
+.back-link {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+.back-link:hover {
+  color: var(--accent);
+}
+
+/* ── Layout ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.container-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ── Cards ── */
+.card {
+  display: block;
+  background: var(--bg-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  border-color: var(--rule-hover);
+  box-shadow: 0 2px 24px var(--accent-glow);
+  transform: translateY(-1px);
+}
+.card:hover .card-title {
+  color: var(--accent);
+}
+
+.card-title {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.82rem;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  margin-bottom: 0.4rem;
+}
+
+.card-description {
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  line-height: 1.55;
+}
+
+.card-meta {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+  margin-top: 0.75rem;
+}
+
+/* ── CTA cards (Browse/GitHub buttons) ── */
+.cta-card {
+  display: inline-block;
+  background: var(--bg-surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.7rem 1.8rem;
+  font-variant: small-caps;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.2s ease;
+}
+.cta-card:hover {
+  border-color: var(--rule-hover);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+.cta-primary {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+.cta-primary:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+  box-shadow: 0 0 24px var(--accent-glow-strong);
+}
+.cta-secondary {
+  color: var(--ink-muted);
+}
+.cta-secondary:hover {
+  color: var(--ink-light);
+}
+
+/* ── Tags ── */
+.tag {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.1rem 0.35rem;
+  display: inline-block;
+  letter-spacing: 0.02em;
+}
+
+/* ── Ornament separator ── */
+.ornament {
+  text-align: center;
+  color: var(--ink-dim);
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.9rem;
+  margin: 2.5rem 0;
+  font-feature-settings: "liga" 1;
+}
+.ornament::before {
+  content: "· · ·";
+  letter-spacing: 0.3em;
+}
+
+/* ── Nav ── */
+nav {
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  background: rgba(14, 12, 10, 0.9);
+}
+nav a {
+  color: var(--ink-muted);
+  transition: color 0.2s ease;
+}
+nav a:hover {
+  color: var(--ink);
+}
+nav a.brand {
+  color: var(--accent);
+  font-variant: small-caps;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--rule);
+  color: var(--ink-dim);
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  margin-top: 4rem;
+  line-height: 1.8;
+}
+
+/* ── Dispensary notes ── */
+.dispensary {
+  background: var(--bg-aside);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 1.5rem 1.75rem;
+}
+.dispensary h3 {
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+.dispensary dt {
+  font-variant: small-caps;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+.dispensary dd {
+  color: var(--ink-light);
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.78rem;
+}
+.dispensary a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.dispensary a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink-dim);
+}
+.install-cmd {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  display: inline-block;
+  user-select: all;
+  cursor: pointer;
+}
+.install-cmd:hover {
+  border-color: var(--accent-dim);
+}
+
+.dispensary .tag {
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.dispensary .tag:hover {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ── Detail page ── */
+.skill-header {
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+.skill-header h1 {
+  font-variant: small-caps;
+  font-size: 2rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.skill-header .tagline {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+
+.skill-body {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ink-light);
+}
+.skill-body p {
+  margin-bottom: 1rem;
+}
+
+/* ── Hero image ── */
+.hero-image {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  filter: sepia(10%) contrast(1.05);
+  margin-bottom: 2rem;
+}
+
+/* ── Catalog grid ── */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* ── Bundle cards ── */
+.bundle-card {
+  display: block;
+  background: var(--bg-surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.bundle-card:hover {
+  box-shadow: 0 2px 24px var(--accent-glow);
+  border-left-color: var(--accent);
+  transform: translateY(-1px);
+}
+.bundle-card:hover .bundle-name {
+  color: var(--accent);
+}
+.bundle-card .roman {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+.bundle-card .bundle-name {
+  font-size: 1.05rem;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 800px) {
+  h1 { font-size: 1.8rem; }
+  .catalog-grid { grid-template-columns: 1fr; }
+  .container, .container-narrow { padding-left: 1.25rem; padding-right: 1.25rem; }
+}

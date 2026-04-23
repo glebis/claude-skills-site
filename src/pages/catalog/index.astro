@@ -1,0 +1,29 @@
+---
+import Base from "../../layouts/Base.astro";
+import CatalogFilter from "../../components/CatalogFilter";
+import { getCollection } from "astro:content";
+
+const skills = await getCollection("skills");
+
+const skillData = skills
+  .sort((a, b) => a.data.name.localeCompare(b.data.name))
+  .map((s) => ({
+    id: s.id,
+    name: s.data.name,
+    tagline: s.data.tagline || s.data.auto_description,
+    bundle: s.data.bundle,
+    tags: s.data.tags,
+    activity: s.data.auto_activity,
+  }));
+
+const bundles = [...new Set(skillData.map((s) => s.bundle).filter((b) => b !== "uncategorized"))].sort();
+---
+
+<Base title="Catalog">
+  <section class="container" style="padding-top:3rem;padding-bottom:3rem;">
+    <h1>Catalog</h1>
+    <p class="state-line">{skills.length} preparations. Search, filter by cabinet, or browse.</p>
+
+    <CatalogFilter client:load skills={skillData} bundles={bundles} />
+  </section>
+</Base>

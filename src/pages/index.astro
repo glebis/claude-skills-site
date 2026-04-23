@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+import Sparkline from "../components/Sparkline.astro";
+import { getCollection } from "astro:content";
+
+const skills = await getCollection("skills");
+const bundles = await getCollection("bundles");
+---
+
+<Base title="Home">
+  <section class="container-narrow" style="padding-top:5rem;padding-bottom:3rem;text-align:center;">
+    <p class="mono" style="color:var(--ink-dim);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">
+      Est. 2025
+    </p>
+    <h1 style="font-size:3.2rem;">The Apothecary</h1>
+    <p class="state-line" style="max-width:36rem;margin-left:auto;margin-right:auto;">
+      {skills.length} preparations for the working terminal, organized into {bundles.length} cabinets.
+      Open source, free to dispense.
+    </p>
+
+    <div style="display:flex;justify-content:center;gap:1rem;margin-top:2.5rem;">
+      <a href="/catalog" class="cta-card cta-primary">Browse the Catalog</a>
+      <a href="https://github.com/glebis/claude-skills" target="_blank" class="cta-card cta-secondary">★ GitHub</a>
+    </div>
+  </section>
+
+  <div class="ornament"></div>
+
+  <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    <h2 style="text-align:center;margin-bottom:2rem;">Cabinets</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem;">
+      {
+        bundles
+          .sort((a, b) => a.data.order - b.data.order)
+          .map((bundle) => (
+            <a href={`/bundles/${bundle.id}`} class="bundle-card">
+              <div style="display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.5rem;">
+                <span class="roman">{bundle.data.roman}</span>
+                <span class="bundle-name">{bundle.data.apothecary_name}</span>
+              </div>
+              <p class="card-description">{bundle.data.tagline}</p>
+              <p class="card-meta">{bundle.data.skills.length} preparations</p>
+            </a>
+          ))
+      }
+    </div>
+  </section>
+
+  <div class="ornament"></div>
+
+  <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    <h2 style="text-align:center;margin-bottom:2rem;">Recent Additions</h2>
+    <div class="catalog-grid">
+      {
+        skills
+          .sort((a, b) => (b.data.auto_last_commit || "").localeCompare(a.data.auto_last_commit || ""))
+          .slice(0, 6)
+          .map((skill) => (
+            <a href={`/catalog/${skill.id}`} class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+                <p class="card-title">{skill.data.name}</p>
+                <Sparkline data={skill.data.auto_activity} width={60} height={16} />
+              </div>
+              <p class="card-description" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+                {skill.data.tagline || skill.data.auto_description}
+              </p>
+            </a>
+          ))
+      }
+    </div>
+  </section>
+</Base>

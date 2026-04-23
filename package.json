@@ -1,0 +1,26 @@
+{
+  "name": "claude-skills-site",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "sync-skills": "tsx src/scripts/sync-from-github.ts --local ../claude-skills"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/preact": "^5.1.2",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.1.9",
+    "preact": "^10.29.1",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}
