@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from "../components/ThemeToggle";
+
 interface Props {
   title: string;
   description?: string;
@@ -20,15 +22,22 @@ const { title, description = "Preparations for the working terminal." } = Astro.
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
   </head>
   <body>
     <nav>
       <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;padding-bottom:1rem;">
         <a href="/" class="brand">The Apothecary</a>
-        <div style="display:flex;gap:1.5rem;font-size:0.85rem;">
+        <div style="display:flex;gap:1.5rem;font-size:0.85rem;align-items:center;">
           <a href="/catalog">Catalog</a>
           <a href="/bundles">Cabinets</a>
           <a href="https://github.com/glebis/claude-skills" target="_blank">GitHub</a>
+          <ThemeToggle client:load />
         </div>
       </div>
     </nav>
