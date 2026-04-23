@@ -5,9 +5,37 @@ import { getCollection } from "astro:content";
 
 const skills = await getCollection("skills");
 const bundles = await getCollection("bundles");
+
+const recentSkills = skills
+  .sort((a, b) => (b.data.auto_last_commit || "").localeCompare(a.data.auto_last_commit || ""))
+  .slice(0, 9);
+
+const activeSkills = skills
+  .filter((s) => s.data.auto_activity.some((v) => v > 0))
+  .sort((a, b) => {
+    const sumA = a.data.auto_activity.reduce((s, v) => s + v, 0);
+    const sumB = b.data.auto_activity.reduce((s, v) => s + v, 0);
+    return sumB - sumA;
+  })
+  .slice(0, 6);
+
+const totalCommits = skills.reduce((sum, s) => sum + s.data.auto_activity.reduce((a, v) => a + v, 0), 0);
+const withActivity = skills.filter((s) => s.data.auto_activity.some((v) => v > 0)).length;
+
+const bundleLabels: Record<string, string> = {
+  "meeting-intelligence": "Meetings",
+  communication: "Communication",
+  research: "Research",
+  "content-publishing": "Content",
+  "personal-analytics": "Analytics",
+  "thinking-strategy": "Thinking",
+  "developer-tools": "Developer",
+  "lab-consulting": "Lab",
+};
 ---
 
 <Base title="Home">
+  <!-- Hero -->
   <section class="container-narrow" style="padding-top:5rem;padding-bottom:3rem;text-align:center;">
     <p class="mono" style="color:var(--ink-dim);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">
       Est. 2025
@@ -24,8 +52,44 @@ const bundles = await getCollection("bundles");
     </div>
   </section>
 
+  <!-- Quick install -->
+  <section class="container-narrow" style="padding-top:1rem;padding-bottom:2rem;">
+    <div style="background:var(--bg-surface);border:1px solid var(--rule);border-radius:4px;padding:1.25rem 1.75rem;text-align:center;">
+      <p style="color:var(--ink-muted);font-size:0.85rem;margin-bottom:0.75rem;">Get started in two commands</p>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:center;">
+        <code class="install-cmd" style="font-size:0.8rem;">/plugin marketplace add glebis/claude-skills</code>
+        <code class="install-cmd" style="font-size:0.8rem;color:var(--ink-muted);">/plugin install &lt;skill-name&gt;@glebis-skills</code>
+      </div>
+    </div>
+  </section>
+
   <div class="ornament"></div>
 
+  <!-- Stats strip -->
+  <section class="container" style="padding-top:1rem;padding-bottom:2rem;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center;">
+      <div>
+        <p class="mono" style="font-size:2rem;color:var(--accent);letter-spacing:-0.02em;">{skills.length}</p>
+        <p style="font-size:0.8rem;color:var(--ink-muted);">preparations</p>
+      </div>
+      <div>
+        <p class="mono" style="font-size:2rem;color:var(--accent);letter-spacing:-0.02em;">{bundles.length}</p>
+        <p style="font-size:0.8rem;color:var(--ink-muted);">cabinets</p>
+      </div>
+      <div>
+        <p class="mono" style="font-size:2rem;color:var(--accent);letter-spacing:-0.02em;">{withActivity}</p>
+        <p style="font-size:0.8rem;color:var(--ink-muted);">active this quarter</p>
+      </div>
+      <div>
+        <p class="mono" style="font-size:2rem;color:var(--accent);letter-spacing:-0.02em;">{totalCommits}</p>
+        <p style="font-size:0.8rem;color:var(--ink-muted);">commits (12 weeks)</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament"></div>
+
+  <!-- Cabinets -->
   <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
     <h2 style="text-align:center;margin-bottom:2rem;">Cabinets</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem;">
@@ -48,25 +112,78 @@ const bundles = await getCollection("bundles");
 
   <div class="ornament"></div>
 
+  <!-- Most active -->
   <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
-    <h2 style="text-align:center;margin-bottom:2rem;">Recent Additions</h2>
+    <h2 style="text-align:center;margin-bottom:0.5rem;">Most Active</h2>
+    <p style="text-align:center;color:var(--ink-muted);font-size:0.85rem;margin-bottom:2rem;">Highest commit activity in the last 12 weeks</p>
     <div class="catalog-grid">
       {
+        activeSkills.map((skill) => (
+          <a href={`/catalog/${skill.id}`} class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+              <p class="card-title">{skill.data.name}</p>
+              <Sparkline data={skill.data.auto_activity} width={80} height={18} />
+            </div>
+            <p class="card-description" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+              {skill.data.tagline || skill.data.auto_description}
+            </p>
+            <p class="card-meta" style="margin-top:0.5rem;">
+              {skill.data.auto_activity.reduce((s, v) => s + v, 0)} commits · {bundleLabels[skill.data.bundle] || skill.data.bundle}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="ornament"></div>
+
+  <!-- Recent additions -->
+  <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    <h2 style="text-align:center;margin-bottom:0.5rem;">Recent Additions</h2>
+    <p style="text-align:center;color:var(--ink-muted);font-size:0.85rem;margin-bottom:2rem;">Latest skills added or updated</p>
+    <div class="catalog-grid">
+      {
+        recentSkills.map((skill) => (
+          <a href={`/catalog/${skill.id}`} class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+              <p class="card-title">{skill.data.name}</p>
+              <span class="mono" style="font-size:0.55rem;color:var(--ink-dim);">{skill.data.auto_last_commit}</span>
+            </div>
+            <p class="card-description" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+              {skill.data.tagline || skill.data.auto_description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="ornament"></div>
+
+  <!-- All skills compact list -->
+  <section class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    <h2 style="text-align:center;margin-bottom:2rem;">All Preparations</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.5rem;">
+      {
         skills
-          .sort((a, b) => (b.data.auto_last_commit || "").localeCompare(a.data.auto_last_commit || ""))
-          .slice(0, 6)
+          .sort((a, b) => a.data.name.localeCompare(b.data.name))
           .map((skill) => (
-            <a href={`/catalog/${skill.id}`} class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
-                <p class="card-title">{skill.data.name}</p>
-                <Sparkline data={skill.data.auto_activity} width={60} height={16} />
-              </div>
-              <p class="card-description" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-                {skill.data.tagline || skill.data.auto_description}
-              </p>
+            <a href={`/catalog/${skill.id}`} style="display:flex;justify-content:space-between;align-items:baseline;padding:0.4rem 0.6rem;border-radius:3px;transition:background 0.2s;">
+              <span class="mono" style="font-size:0.72rem;color:var(--ink-light);">{skill.data.name}</span>
+              <span style="font-size:0.65rem;color:var(--ink-dim);">{bundleLabels[skill.data.bundle] || ""}</span>
             </a>
           ))
       }
     </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="/catalog" class="cta-card cta-primary" style="font-size:0.9rem;">Browse the Full Catalog →</a>
+    </div>
   </section>
 </Base>
+
+<style>
+  .container > div > a[href^="/catalog/"]:hover {
+    background: var(--bg-raised);
+  }
+</style>
