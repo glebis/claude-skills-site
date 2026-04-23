@@ -18,34 +18,50 @@
   font-display: swap;
 }
 
+/* Light theme (Tufte) — default for light system preference */
 :root {
-  --bg: #0e0c0a;
-  --bg-surface: #16130f;
-  --bg-raised: #1e1a14;
-  --bg-aside: #1a1710;
+  --bg: #fffff8;
+  --bg-surface: #f9f6ee;
+  --bg-raised: #f0ece0;
+  --bg-aside: #f5f2e8;
 
-  --ink: #d4c8b0;
-  --ink-light: #a89878;
-  --ink-muted: #6e6050;
-  --ink-dim: #4a4030;
+  --ink: #1a1a1a;
+  --ink-light: #555;
+  --ink-muted: #888;
+  --ink-dim: #bbb;
 
-  --accent: #c89040;
-  --accent-dim: #8a6428;
-  --accent-glow: rgba(200, 144, 64, 0.12);
-  --accent-glow-strong: rgba(200, 144, 64, 0.25);
+  --accent: #a04010;
+  --accent-dim: #c45a28;
+  --accent-glow: rgba(160, 64, 16, 0.08);
+  --accent-glow-strong: rgba(160, 64, 16, 0.15);
 
-  --rule: #2a2418;
-  --rule-light: #3a3020;
-  --rule-hover: #504030;
+  --rule: #ddd;
+  --rule-light: #ccc;
+  --rule-hover: #aaa;
+}
 
-  --cabinet-amber: #c89040;
-  --cabinet-teal: #4a9a8a;
-  --cabinet-burgundy: #8a3a3a;
-  --cabinet-indigo: #5a6aaa;
-  --cabinet-violet: #7a5a9a;
-  --cabinet-green: #4a7a4a;
-  --cabinet-copper: #b07040;
-  --cabinet-crimson: #9a3030;
+/* Dark theme (Apothecary) — for dark system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0c0a;
+    --bg-surface: #16130f;
+    --bg-raised: #1e1a14;
+    --bg-aside: #1a1710;
+
+    --ink: #d4c8b0;
+    --ink-light: #a89878;
+    --ink-muted: #6e6050;
+    --ink-dim: #4a4030;
+
+    --accent: #c89040;
+    --accent-dim: #8a6428;
+    --accent-glow: rgba(200, 144, 64, 0.12);
+    --accent-glow-strong: rgba(200, 144, 64, 0.25);
+
+    --rule: #2a2418;
+    --rule-light: #3a3020;
+    --rule-hover: #504030;
+  }
 }
 
 /* ── Reset ── */
@@ -237,12 +253,11 @@ h3 {
 /* ── Nav ── */
 nav {
   border-bottom: 1px solid var(--rule);
-  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(8px);
-  background: rgba(14, 12, 10, 0.9);
 }
 nav a {
   color: var(--ink-muted);
@@ -305,7 +320,7 @@ footer {
   font-family: "Monaspace Argon", monospace;
   font-size: 0.75rem;
   color: var(--accent);
-  background: var(--bg);
+  background: var(--bg-raised);
   border: 1px solid var(--rule);
   border-radius: 3px;
   padding: 0.3rem 0.6rem;
@@ -358,8 +373,13 @@ footer {
 .hero-image {
   border: 1px solid var(--rule);
   border-radius: 4px;
-  filter: sepia(10%) contrast(1.05);
   margin-bottom: 2rem;
+}
+@media (prefers-color-scheme: dark) {
+  .hero-image { filter: sepia(10%) contrast(1.05); }
+}
+@media (prefers-color-scheme: light) {
+  .hero-image { filter: contrast(1.02); }
 }
 
 /* ── Catalog grid ── */
