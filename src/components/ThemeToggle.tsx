@@ -37,7 +37,7 @@ export default function ThemeToggle() {
         cursor: "pointer",
         fontSize: "1rem",
         padding: "0.2rem 0.4rem",
-        transition: "color 0.2s",
+        transition: "color 0.2s, transform 0.2s",
         lineHeight: 1,
       }}
     >

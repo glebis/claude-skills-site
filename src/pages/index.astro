@@ -145,8 +145,8 @@ const bundleLabels: Record<string, string> = {
         skills
           .sort((a, b) => a.data.name.localeCompare(b.data.name))
           .map((skill) => (
-            <a href={`/catalog/${skill.id}`} style="display:flex;justify-content:space-between;align-items:baseline;padding:0.4rem 0.6rem;border-radius:3px;transition:background 0.2s;">
-              <span class="mono" style="font-size:0.72rem;color:var(--ink-light);">{skill.data.name}</span>
+            <a href={`/catalog/${skill.id}`} class="compact-link">
+              <span class="compact-name mono" style="font-size:0.72rem;color:var(--ink-light);">{skill.data.name}</span>
               <span style="font-size:0.65rem;color:var(--ink-dim);">{bundleLabels[skill.data.bundle] || ""}</span>
             </a>
           ))
