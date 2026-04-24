@@ -17,4 +17,17 @@ repo_path: "deep-research"
 dependencies: []
 ---
 
-This skill should be used when conducting comprehensive research on any topic using the OpenAI Deep Research API. It automates prompt enhancement through interactive clarifying questions, saves research parameters, and executes deep research with web search capabilities. Use when the user asks for in-depth analysis, investigation, research summaries, or topic exploration.
+## What it does
+
+Runs comprehensive research on any topic using OpenAI's Deep Research API (o4-mini-deep-research model). Enhances vague queries through interactive clarifying questions, then executes a deep web-search-enabled research pass that takes 10–20 minutes and returns a detailed report with sources.
+
+## Workflow
+
+1. **Prompt assessment** — evaluates if your query is specific enough, asks 2–3 clarifying questions if needed
+2. **Enhancement** — constructs an optimized research prompt from your answers
+3. **Execution** — runs deep research with full web search capabilities (10–20 min)
+4. **Output** — detailed report with sources, saved to a timestamped file for reproducibility
+
+## When to use
+
+When you need comprehensive analysis on a topic and are willing to wait 10–20 minutes for thorough results. Good for competitive landscape analysis, technology comparisons, trend research, and literature reviews.

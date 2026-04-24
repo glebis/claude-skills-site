@@ -17,4 +17,22 @@ repo_path: "doctorg"
 dependencies: []
 ---
 
-Evidence-based health research using tiered trusted sources with GRADE-inspired evidence ratings. Integrates Apple Health data for personalized context. Use when user asks health, nutrition, exercise, sleep, or wellness questions.
+## What it does
+
+Answers health and wellness questions using only trusted, evidence-based sources with explicit evidence strength ratings. Searches tiered sources — from PubMed and Cochrane (Tier 1) down to quality journalism (Tier 4) — and presents findings with GRADE-inspired confidence levels.
+
+## Depth levels
+
+- **Quick** (default, ~30s) — WebSearch across Tier 1–2 sources for simple factual questions
+- **Deep** (~90s) — adds Tavily search across Tier 1–3 for nuanced topics with competing claims
+- **Full** (~3 min) — adds Firecrawl for primary source scraping on controversial topics
+
+## Key features
+
+- **Tiered evidence** — PubMed/Cochrane > Mayo Clinic/Cleveland Clinic > Examine.com/STAT News > quality journalism
+- **Category-aware** — auto-detects nutrition, exercise, sleep, medication, or mental health topics and prioritizes relevant sources
+- **Personal context** — integrates Apple Health data when available for personalized answers
+
+## When to use
+
+Any health, nutrition, exercise, sleep, or wellness question where you want evidence-based answers rather than generic advice.

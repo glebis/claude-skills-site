@@ -17,4 +17,17 @@ repo_path: "agency-docs-updater"
 dependencies: []
 ---
 
-End-to-end pipeline for publishing Claude Code lab meetings. Accepts optional args: date (YYYYMMDD, "yesterday", "today") and lab number (e.g. "04"). Examples: "yesterday 04", "20260420 05", "04" (today, lab 04), "" (today, auto-detect lab).
+## What it does
+
+A fully automated publishing pipeline that takes a Claude Code lab meeting from raw recording to published content in a single command. It chains together transcript fetching, video downloading, YouTube uploading, thumbnail generation, and docs site deployment.
+
+## Key features
+
+- **Transcript-first workflow** — starts from Fathom or Zoom transcripts, auto-detects language (Russian or English)
+- **Video pipeline** — downloads from Zoom (primary) or Fathom (fallback), uploads to YouTube with generated metadata and branded thumbnails
+- **Docs site integration** — generates MDX content, commits to the agency-docs repo, and triggers deployment
+- **Smart defaults** — auto-detects today's date and lab number; accepts overrides like `yesterday 04` or `20260420 05`
+
+## When to use
+
+After finishing a Claude Code lab session, when you want to publish the recording, transcript, and notes to your docs site and YouTube channel without doing each step manually.

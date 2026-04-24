@@ -17,4 +17,18 @@ repo_path: "github-gist"
 dependencies: []
 ---
 
-Publish files or Obsidian notes as GitHub Gists. Use when user wants to share code/notes publicly, create quick shareable snippets, or publish markdown to GitHub. Triggers include "publish as gist", "create gist", "share on github", "make a gist from this".
+## What it does
+
+Publishes any file as a GitHub Gist with a single command. Supports both the `gh` CLI (preferred) and direct GitHub API with token auth. Creates secret (unlisted) gists by default, with options for public visibility.
+
+## Key features
+
+- **One command** — `publish_gist.py /path/to/file.md` and you get a shareable URL
+- **Flexible input** — publish files from disk, pipe from stdin, or override the filename in the gist
+- **Custom descriptions** — add context to make gists findable later
+- **Browser integration** — `--open` flag opens the gist in your browser immediately
+- **URL-only mode** — `--url-only` for scripting and piping
+
+## When to use
+
+When you want to quickly share a code snippet, session log, or note with someone via a GitHub URL. Especially useful for sharing Claude Code sessions for peer review.

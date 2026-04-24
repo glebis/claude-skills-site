@@ -17,4 +17,18 @@ repo_path: "fathom"
 dependencies: []
 ---
 
-Fetch meetings, transcripts, summaries, and action items from Fathom API. Use when user asks to get Fathom recordings, sync meeting transcripts, or fetch recent calls.
+## What it does
+
+Connects to the Fathom API to fetch meeting recordings, full transcripts, AI-generated summaries, action items, and participant info. Saves everything as structured markdown to your Obsidian vault.
+
+## Key features
+
+- **List and fetch** — browse recent meetings, fetch by ID, or pull all meetings from a specific date
+- **Full transcripts** — downloads complete meeting transcripts with speaker identification
+- **AI summaries** — includes Fathom's AI-generated summaries and action items
+- **Video download** — optionally download the video recording (requires ffmpeg)
+- **Auto-analyze** — can pipe fetched transcripts directly to the transcript-analyzer skill
+
+## When to use
+
+After any recorded meeting, to sync transcripts and summaries into your vault. Pairs well with meeting-processor for type-specific structured analysis.

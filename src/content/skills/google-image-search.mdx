@@ -17,4 +17,17 @@ repo_path: "google-image-search"
 dependencies: []
 ---
 
-Search and download images via Google Custom Search API with LLM-powered selection. This skill should be used when finding images for articles, presentations, research documents, or enriching Obsidian notes with relevant visuals. Supports simple queries, batch processing from JSON config, automatic config generation from terms, and full note enrichment with automatic image insertion below headings.
+## What it does
+
+Searches for images via Google Custom Search API, scores results using intelligent ranking, and lets an LLM pick the best match. Downloads selected images and can automatically insert them into your documents.
+
+## Modes
+
+- **Simple query** — search for a single term, download the best match
+- **Batch processing** — process multiple queries from a JSON config file
+- **Config generation** — give it a list of terms and it creates an optimized query config via LLM
+- **Note enrichment** — extract visual-worthy terms from an Obsidian note, find images for each, and insert them below relevant headings
+
+## When to use
+
+When you need visuals for articles, presentations, or research documents. Especially powerful for enriching existing Obsidian notes with relevant images automatically.

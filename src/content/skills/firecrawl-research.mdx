@@ -17,4 +17,22 @@ repo_path: "firecrawl-research"
 dependencies: []
 ---
 
-This skill should be used when the user requests to research topics using FireCrawl, enrich notes with web sources, search and scrape information, or write scientific/academic papers. It extracts research topics from markdown files, creates research documents with scraped sources, generates BibTeX bibliographies from research results, and provides Pandoc/MyST templates for academic writing with citation management.
+## What it does
+
+Systematically researches topics by extracting them from markdown files, searching and scraping the web via FireCrawl API, and generating comprehensive research documents with full source material. Also supports BibTeX bibliography generation and academic writing templates.
+
+## Workflow
+
+1. **Topic extraction** — automatically pulls research topics from markdown headers and `[research]` tags
+2. **Search and scrape** — for each topic, searches FireCrawl and scrapes full content from up to N results
+3. **Output** — creates one markdown file per topic with title, date, source count, and complete scraped content
+
+## Key features
+
+- **Batch processing** — extract multiple topics from a single file and research them all
+- **Full-text scraping** — not just search snippets but complete article content in markdown format
+- **Academic support** — BibTeX bibliography generation and Pandoc/MyST templates for papers with citation management
+
+## When to use
+
+When you need to research multiple topics systematically, enrich notes with web sources, or gather source material for academic or professional writing.

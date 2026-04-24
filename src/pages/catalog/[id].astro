@@ -29,6 +29,16 @@ const { Content } = await render(skill);
 
     <div class="ornament"></div>
 
+    {skill.data.auto_description && (
+      <section class="skill-description">
+        <p>{skill.data.auto_description}</p>
+      </section>
+    )}
+
+    <div class="skill-body">
+      <Content />
+    </div>
+
     <aside class="dispensary">
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <h3>Dispensary Notes</h3>
