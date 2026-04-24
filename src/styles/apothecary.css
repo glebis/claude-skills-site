@@ -385,6 +385,15 @@ footer a:hover {
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--rule);
 }
+.skill-label {
+  display: inline-block;
+  font-family: 'Monaspace Argon', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 0.4rem;
+}
 .skill-header h1 {
   font-variant: small-caps;
   font-size: 2rem;
@@ -490,18 +499,24 @@ footer a:hover {
   display: block;
   background: var(--bg-surface);
   border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--cabinet-color, var(--accent));
   border-radius: 4px;
   padding: 1.25rem 1.5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 .bundle-card:hover {
-  box-shadow: 0 2px 24px var(--accent-glow);
-  border-left-color: var(--accent);
+  box-shadow: 0 2px 24px color-mix(in srgb, var(--cabinet-color, var(--accent)) 15%, transparent);
+  border-left-color: var(--cabinet-color, var(--accent));
   transform: translateY(-1px);
 }
 .bundle-card:hover .bundle-name {
-  color: var(--accent);
+  color: var(--cabinet-color, var(--accent));
+}
+.bundle-card .cabinet-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--cabinet-color, var(--accent));
+  opacity: 0.7;
 }
 .bundle-card .roman {
   font-family: "Monaspace Argon", monospace;

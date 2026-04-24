@@ -32,6 +32,28 @@ const bundleLabels: Record<string, string> = {
   "developer-tools": "Developer",
   "lab-consulting": "Lab",
 };
+
+const cabinetIcons: Record<string, string> = {
+  "meeting-intelligence": "🜁",
+  communication: "☿",
+  research: "🝊",
+  "content-publishing": "⊞",
+  "personal-analytics": "☉",
+  "thinking-strategy": "⚖",
+  "developer-tools": "⚒",
+  "lab-consulting": "🝆",
+};
+
+const cabinetColors: Record<string, string> = {
+  "meeting-intelligence": "#b8860b",
+  communication: "#2a8a8a",
+  research: "#7a2a3a",
+  "content-publishing": "#4a4a8a",
+  "personal-analytics": "#6a3a8a",
+  "thinking-strategy": "#2a6a3a",
+  "developer-tools": "#8a5a2a",
+  "lab-consulting": "#8a2a2a",
+};
 ---
 
 <Base title="Home">
@@ -52,10 +74,14 @@ const bundleLabels: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Quick install -->
+  <!-- What are skills -->
   <section class="container-narrow" style="padding-top:1rem;padding-bottom:2rem;">
-    <div style="background:var(--bg-surface);border:1px solid var(--rule);border-radius:4px;padding:1.25rem 1.75rem;text-align:center;">
-      <p style="color:var(--ink-muted);font-size:0.85rem;margin-bottom:0.75rem;">Get started in two commands</p>
+    <div style="background:var(--bg-surface);border:1px solid var(--rule);border-radius:4px;padding:1.5rem 1.75rem;">
+      <h3 style="font-size:1.1rem;margin-bottom:0.75rem;text-align:center;">What are Claude Code Skills?</h3>
+      <p style="color:var(--ink-light);font-size:0.9rem;line-height:1.6;margin-bottom:1rem;">
+        Skills are reusable markdown instructions that extend <a href="https://docs.anthropic.com/en/docs/claude-code/skills" target="_blank">Claude Code</a> with specialized capabilities — from meeting transcription to image generation to test-driven development. Each skill teaches Claude a new workflow it can execute autonomously. Think of them as recipes for your AI agent.
+      </p>
+      <p style="color:var(--ink-muted);font-size:0.85rem;margin-bottom:0.75rem;text-align:center;">Install any skill in two commands</p>
       <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:center;">
         <code class="install-cmd" style="font-size:0.8rem;">/plugin marketplace add glebis/claude-skills</code>
         <code class="install-cmd" style="font-size:0.8rem;color:var(--ink-muted);">/plugin install &lt;skill-name&gt;@glebis-skills</code>
@@ -73,8 +99,9 @@ const bundleLabels: Record<string, string> = {
         bundles
           .sort((a, b) => a.data.order - b.data.order)
           .map((bundle) => (
-            <a href={`/bundles/${bundle.id}`} class="bundle-card">
+            <a href={`/bundles/${bundle.id}`} class="bundle-card" style={`--cabinet-color: ${cabinetColors[bundle.id] || "var(--accent)"}`}>
               <div style="display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.5rem;">
+                <span class="cabinet-icon">{cabinetIcons[bundle.id]}</span>
                 <span class="roman">{bundle.data.roman}</span>
                 <span class="bundle-name">{bundle.data.apothecary_name}</span>
               </div>
