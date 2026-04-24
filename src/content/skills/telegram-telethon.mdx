@@ -17,4 +17,26 @@ repo_path: "telegram-telethon"
 dependencies: []
 ---
 
-This skill should be used for comprehensive Telegram automation via Telethon API. Use for sending/receiving messages, monitoring chats, running a background daemon that triggers Claude Code sessions, managing channels/groups, and downloading media. Triggers on "telegram daemon", "monitor telegram", "telegram bot", "spawn Claude from telegram", or any Telethon-related request. IMPORTANT: Use `draft` command for "драфт/draft", use `send` for "отправь/send"; if ambiguous, ASK before sending.
+## What it does
+
+Full Telegram automation via the Telethon API — a superset of the basic telegram skill. Includes daemon mode that monitors chats and spawns Claude Code sessions, channel publishing with frontmatter workflows, voice transcription, and markdown-to-Telegram HTML conversion.
+
+## Exclusive features (vs. basic telegram skill)
+
+- **Daemon mode** — background process that monitors chats and triggers Claude Code sessions automatically
+- **Channel publishing** — draft→channel workflow with frontmatter, media albums, post-publish indexing, and lint
+- **Markdown conversion** — send and publish with proper markdown→Telegram HTML formatting
+- **Scheduled delivery** — send or publish at a specific time (ISO, relative, or natural language)
+- **Voice transcription** — transcribe voice messages via Groq/Whisper
+- **Drafts** — local draft management (create, list, send)
+
+## Key features
+
+- **Interactive setup** — wizard-guided Telethon authentication on first use
+- **Full message lifecycle** — send, edit, delete, forward, mark as read
+- **Media support** — download photos, videos, documents from any chat
+- **Channel management** — lint channels for formatting issues
+
+## When to use
+
+When you need more than basic message operations — daemon monitoring, channel publishing, scheduled messages, or voice transcription. For simple read/send operations, the basic telegram skill is lighter.

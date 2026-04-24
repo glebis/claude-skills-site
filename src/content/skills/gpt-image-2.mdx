@@ -17,4 +17,20 @@ repo_path: "gpt-image-2"
 dependencies: []
 ---
 
-Generate and edit images using OpenAI's GPT Image 2 API. Supports style presets (including text-heavy ones like infographic/diagram/poster), platform-specific sizing (YouTube/slides/blog), thinking mode for complex compositions, variants with contact sheets, image editing, reference images for style transfer, cost estimation, and OpenRouter support. This skill should be used when the user requests image generation via OpenAI/GPT Image 2, or when high-quality text rendering in images is needed.
+## What it does
+
+Generates and edits images from text prompts via OpenAI's GPT Image 2 API. Excels at images with readable text — infographics, diagrams, posters, slides — where text rendering quality matters.
+
+## Key features
+
+- **Style presets** — editorial, infographic, diagram, poster, grain, wireframe, and more
+- **Platform sizing** — auto-crops for YouTube thumbnails (1280x720), slides, blog headers
+- **Thinking mode** — the model reasons about composition before rendering, producing better layouts for complex images
+- **Variants** — generate N variations of the same concept with an auto-generated contact sheet
+- **Image editing** — modify existing images with text instructions
+- **Style transfer** — use a reference image to match its aesthetic in a new generation
+- **Cost estimation** — `--estimate` flag to preview cost before generating
+
+## When to use
+
+When you need generated images with high-quality text rendering (infographics, diagrams, posters) or want more control over composition than what simpler generators offer. For faster/cheaper iteration, try nano-banana instead.

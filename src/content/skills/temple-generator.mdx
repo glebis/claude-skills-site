@@ -17,4 +17,24 @@ repo_path: "temple-generator"
 dependencies: []
 ---
 
-Generate a 3D interactive knowledge map (Inner Temple) from any Obsidian vault or document set. Supports multi-scale abstraction layers and dual-graph common maps between two vaults.
+## What it does
+
+Generates a 3D interactive knowledge visualization from any Obsidian vault. The output is a single HTML file (Three.js) with concentric entity rings, audio, discovery mechanics, and multi-scale semantic zoom. Think of it as a navigable 3D map of your knowledge graph.
+
+## How it works
+
+1. **Scan** — extracts files, tags, links, clusters, and centrality from the vault
+2. **Classify** — assigns entities to types based on content analysis
+3. **Generate** — produces the 3D visualization with appropriate entity positioning, connections, and semantic layers
+4. **Compare** (optional) — create a dual-graph "common map" showing shared themes between two vaults
+
+## Key features
+
+- **Multi-scale zoom** — from high-level theme clusters down to individual notes
+- **Entity typing** — automatically classifies nodes (concepts, people, projects, etc.)
+- **Interactive discovery** — explore connections by navigating the 3D space
+- **Single-file output** — one self-contained HTML file, no server needed
+
+## When to use
+
+When you want to visualize and explore the structure of your Obsidian vault as an interactive 3D knowledge map, or compare the overlap between two vaults.

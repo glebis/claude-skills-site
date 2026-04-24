@@ -17,4 +17,25 @@ repo_path: "vision-bench"
 dependencies: []
 ---
 
-Score and compare images using vision LLMs as judges. YAML-defined criteria presets for 11 use cases (text-to-image, photorealism, document OCR, charts, UI, portrait, product, scientific, invoice, alt-text, artistic style). Supports OpenAI, Anthropic, Gemini, Mistral, and OpenRouter as judge providers. Keys auto-decrypted via SOPS + age.
+## What it does
+
+Uses vision LLMs as automated judges to score and compare images against domain-specific criteria. Provides structured evaluation with per-criterion scores, enabling objective image quality assessment across different use cases.
+
+## Criteria presets (11 built-in)
+
+Text-to-image, photorealism, document OCR, charts, UI design, portrait, product photography, scientific visualization, invoice quality, alt-text accuracy, and artistic style evaluation.
+
+## Supported judge providers
+
+OpenAI, Anthropic, Gemini, Mistral, and OpenRouter — run the same evaluation across multiple vision models and compare their assessments.
+
+## Key features
+
+- **YAML-defined criteria** — customize evaluation criteria per use case or create your own
+- **Multi-provider comparison** — see how different vision models rate the same image
+- **Structured scoring** — per-criterion numeric scores, not just pass/fail
+- **Batch evaluation** — score multiple images against the same criteria
+
+## When to use
+
+When you need to evaluate image quality objectively — comparing outputs from different generation models, quality-checking thumbnails, validating OCR-ready documents, or benchmarking style transfer results.

@@ -17,4 +17,27 @@ repo_path: "telegram"
 dependencies: []
 ---
 
-This skill should be used when fetching, searching, downloading, sending, editing, or publishing messages on Telegram. Use for queries like "show my Telegram messages", "search Telegram for...", "get unread messages", "send a message to...", "edit that message", "publish this draft to klodkot", or "add Telegram messages to my notes".
+## What it does
+
+Fetches, searches, sends, edits, and publishes Telegram messages with Obsidian integration. A single-script solution backed by the `telegram_dl` library for authentication.
+
+## Commands
+
+- **list** — browse available chats with search and filtering
+- **recent** — get recent messages from all chats or a specific one
+- **search** — search messages by keyword across chats
+- **unread** — show unread messages
+- **send** — send a message to any chat
+- **edit** — edit a previously sent message
+- **download** — download media from messages
+
+## Key features
+
+- **Chat filtering** — filter by name, exact match, or chat ID
+- **Date ranges** — limit results by days back
+- **Obsidian export** — add messages directly to your vault notes
+- **JSON output** — structured output for processing
+
+## When to use
+
+For basic Telegram operations — reading messages, searching history, sending messages. For advanced automation (daemon mode, channel publishing, voice transcription), use telegram-telethon instead.

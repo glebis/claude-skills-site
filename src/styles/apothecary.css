@@ -402,9 +402,62 @@ footer a:hover {
   font-size: 1rem;
   line-height: 1.75;
   color: var(--ink-light);
+  margin-bottom: 2rem;
 }
 .skill-body p {
   margin-bottom: 1rem;
+}
+.skill-body h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.skill-body h2:first-child {
+  margin-top: 0;
+}
+.skill-body h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.skill-body ul, .skill-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.skill-body li {
+  margin-bottom: 0.35rem;
+}
+.skill-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.skill-body code {
+  font-family: 'Monaspace Argon', monospace;
+  font-size: 0.85em;
+  background: var(--bg-alt, rgba(0,0,0,0.04));
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+.skill-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.skill-body th, .skill-body td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+.skill-body th {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* ── Hero image ── */

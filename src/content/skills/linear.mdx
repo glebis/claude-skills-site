@@ -17,4 +17,19 @@ repo_path: "linear"
 dependencies: []
 ---
 
-Manage Linear issues, projects, and workflows via CLI. This skill should be used when the user wants to create, list, update, or search Linear issues, manage projects or milestones, or interact with their Linear workspace. Triggers on "create a task", "add a Linear issue", "list my issues", "update GLE-123", "what's in my backlog", or any Linear-related request.
+## What it does
+
+A standalone CLI for Linear that handles issue tracking without leaving the terminal. Zero dependencies beyond Python 3, with browser-based OAuth authentication (no API keys needed).
+
+## Commands
+
+- **create** — new issue with team, state, assignee, priority, due date, labels, and description
+- **list** — filter by assignee (--mine), status, team, priority; output as text or JSON
+- **show** — full issue details by identifier (e.g., GLE-123)
+- **update** — change state, priority, due date, assignee, or title
+- **comment** — add a comment to any issue
+- **teams/me/statuses/labels** — workspace metadata queries
+
+## When to use
+
+When you want to create, triage, or update Linear issues without switching to the browser. Especially useful for creating issues from the terminal as part of a development workflow.

@@ -17,4 +17,22 @@ repo_path: "session-search"
 dependencies: []
 ---
 
-This skill should be used when searching Claude Code session transcripts with semantic understanding. Triggers on queries like "find sessions about X", "when did I work on Y", "search previous conversations". Supports natural language queries with synonym matching.
+## What it does
+
+Searches Claude Code session transcripts by combining keyword pre-filtering with semantic evaluation. Faster than session-finder (no embedding index needed) but relies on keyword matching plus LLM-based relevance scoring.
+
+## How it works
+
+1. **Keyword pre-filter** — scans all sessions for keyword matches against your query
+2. **Excerpt extraction** — pulls meaningful excerpts from top candidate sessions
+3. **Semantic evaluation** ��� scores each session's relevance considering synonyms ("bug" matches "error"), related concepts ("debugging" matches test failures), and domain context
+
+## Key features
+
+- **Synonym matching** — "refactoring" matches Edit-heavy sessions; "obsidian" matches vault-related work
+- **Configurable** — adjust max results and lookback period (default: 10 results, 90 days)
+- **No indexing required** — works immediately without building an embedding index first
+
+## When to use
+
+When you need to find a past session quickly without waiting for an index build. For more precise semantic search over large session histories, use session-finder instead.

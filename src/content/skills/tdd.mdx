@@ -17,4 +17,28 @@ repo_path: "tdd"
 dependencies: []
 ---
 
-This skill should be used when the user wants to implement features or fix bugs using test-driven development. Enforces the RED-GREEN-REFACTOR cycle with vertical slicing, context isolation between test writing and implementation, human checkpoints, and auto-test feedback loops. Uses multi-agent orchestration with the Task tool for architecturally enforced context isolation. Supports Jest, Vitest, pytest, Go test, cargo test, PHPUnit, and RSpec.
+## What it does
+
+Enforces disciplined RED-GREEN-REFACTOR cycles using separate subagents for test writing and implementation. The core innovation: the Test Writer never sees implementation code, and the Implementer never sees the specification — preventing the LLM from leaking intent between roles.
+
+## Invocation modes
+
+- `/tdd <feature>` — interactive mode with approval checkpoints at each step
+- `/tdd --auto <feature>` — autonomous mode, runs all slices without pausing
+- `/tdd --resume` — resume an interrupted TDD session from saved state
+- `/tdd --dry-run <feature>` — validate the entire pipeline without writing any code
+
+## Supported frameworks
+
+Jest, Vitest, pytest, Go test, cargo test, PHPUnit, and RSpec.
+
+## How it works
+
+1. **Phase 0** — detect test framework, verify baseline, extract API surface
+2. **Phase 1** — decompose the feature into vertical slices (user approves)
+3. **For each slice** — RED (write failing test) → GREEN (implement to pass) → REFACTOR (clean up)
+4. Each phase runs in a separate subagent with architecturally enforced context isolation
+
+## When to use
+
+When you want test-driven development with actual discipline — not just "write tests after." Especially valuable for features where test quality matters, since the isolated agents prevent test-implementation contamination.

@@ -17,4 +17,25 @@ repo_path: "nano-banana"
 dependencies: []
 ---
 
-Generate and edit images using Google's Gemini image generation models (Nano Banana family). Supports style presets, platform-specific sizing (YouTube/slides/blog), variants, image editing via inlineData, reference images for style transfer, and organized output with metadata. Default model is Nano Banana 2 (gemini-3.1-flash-image-preview). Key is auto-decrypted via SOPS.
+## What it does
+
+Generates and edits images from text prompts using Google's Gemini image generation models. Fast, cheap, and good for rapid iteration. Three model tiers from quick flash to highest-quality pro.
+
+## Models
+
+- **Nano Banana 2** (default) — gemini-3.1-flash-image-preview, best instruction following, fast
+- **Nano Banana Pro** — gemini-3-pro-image-preview, highest quality, best text in images
+- **Nano Banana** (original) — gemini-2.5-flash-image, legacy
+
+## Key features
+
+- **Style presets** — editorial (thin lines, muted palette), wireframe, grain, and more
+- **Platform sizing** — auto-crop for YouTube thumbnails, slides, blog headers
+- **Variants** — generate N versions with a contact sheet for comparison
+- **Image editing** — modify existing images with text instructions
+- **Style transfer** — match the aesthetic of a reference image
+- **History** — re-roll the last prompt or browse generation history
+
+## When to use
+
+When you need quick image generation for presentations, thumbnails, articles, or social posts. Faster and cheaper than gpt-image-2; choose that one instead when text rendering quality is critical.

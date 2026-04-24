@@ -17,4 +17,18 @@ repo_path: "granola"
 dependencies: []
 ---
 
-This skill should be used when importing, listing, or exporting Granola meeting recordings and transcripts. Queries Granola's local cache and API to list meetings, extract transcripts, and export to Obsidian notes in Fathom-compatible format.
+## What it does
+
+Connects to Granola's local data (desktop app cache + API) to list meetings, view transcripts, and export them as Obsidian notes. Output format is compatible with the Fathom skill, so your vault stays consistent regardless of which tool recorded the meeting.
+
+## Commands
+
+- **list** — browse all meetings from the local cache
+- **show** — view meeting details by ID or title substring
+- **transcript** — get full transcript (cache first, API fallback)
+- **export** — save meeting as a structured Obsidian note with frontmatter
+- **api-list** — list meetings via API (may show more than the local cache)
+
+## When to use
+
+When you use Granola for meeting recording and want to get transcripts and summaries into your Obsidian vault. Works alongside the Fathom skill — both produce the same note format.

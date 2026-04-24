@@ -17,4 +17,24 @@ repo_path: "session-finder"
 dependencies: []
 ---
 
-Index and search Claude Code sessions using semantic embeddings (Gemini). Find past sessions by topic, relaunch the best match. Triggers on "find session", "which session did I", "relaunch the session where", "session about X".
+## What it does
+
+Builds a semantic search index over all your Claude Code sessions using Gemini embeddings, then lets you find and relaunch past sessions by topic. No more scrolling through session lists — describe what you were working on and it finds the match.
+
+## How it works
+
+1. **Extraction** — parses each session JSONL into a structured document (summaries, first messages, tools used, project name)
+2. **Embedding** — embeds documents with Gemini's embedding model via the `llm` CLI
+3. **Search** — your query is embedded, cosine similarity ranks all sessions, top matches are returned with confidence scores
+4. **Relaunch** — resume the best match directly with `claude --resume`
+
+## Commands
+
+- **index** — build/update the embedding index (configurable age range)
+- **search** — find sessions matching a query, ranked by relevance
+- **open** — find and immediately resume the best-matching session
+- **stats** — index statistics
+
+## When to use
+
+When you want to find a past session by what you were doing, not when you did it. "Find the session where I debugged the auth middleware" beats scrolling through dates.

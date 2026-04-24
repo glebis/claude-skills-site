@@ -17,4 +17,28 @@ repo_path: "skill-studio"
 dependencies: []
 ---
 
-Interview-driven automation design tool. This skill should be used when the user wants to design a new skill, agent, automation, shortcut, or any other automatable workflow. Runs a coverage-driven JTBD interview (text or voice), then exports a one-page markdown spec plus an SVG design map.
+## What it does
+
+Conducts a structured JTBD interview to help you design a new skill, agent, or automation — then exports a one-page spec and an SVG design map. Sits between "should I automate this?" and "how do I code this?" in your workflow.
+
+## Interview modes
+
+- **Text** (default) — interactive Q&A in the terminal, no API keys needed
+- **Voice** — live voice interview via Daily/Groq/Deepgram (requires API keys)
+
+## Depth levels
+
+- **Sprint** (0.60 coverage, ~5–7 questions) — quick scoping
+- **Standard** (0.80 coverage, ~15–20 questions) — default, thorough design
+- **Deep** (0.92 coverage, ~25–35 questions) — comprehensive spec for complex automations
+
+## Key features
+
+- **Coverage tracking** — the interview adapts based on which design fields still need data
+- **Session seeding** — can bootstrap from a prior Claude Code transcript or another session
+- **Multiple question styles** — scenario-first, socratic, metaphor-first, or direct form
+- **Output** — `design.md` (one-page spec) + `design.svg` (visual map)
+
+## When to use
+
+When you have a recurring pain or workflow you want to turn into an automation, and need to scope it properly before building. Also useful for designing skills, bots, agents, or any structured workflow.

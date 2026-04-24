@@ -17,4 +17,29 @@ repo_path: "recording"
 dependencies: []
 ---
 
-Demo/recording mode that redacts personally identifiable and sensitive information from Claude Code's outputs. Use when the user invokes /recording or says they are about to record, screen-share, or demo their Claude Code session and want PII scrubbed in real time.
+## What it does
+
+Activates a real-time PII redaction mode for Claude Code's outputs during screen-shares, demos, and recordings. All sensitive content is replaced with obviously fake placeholder data before it appears on screen.
+
+## What gets redacted
+
+- **Names** → Alex Doe, Jamie Roe
+- **Emails/phones/URLs** → user@example.com, +49 000 000 0000
+- **Organizations** → Acme Co, Globex
+- **Locations** → Some City, Main Street
+- **Dates** → shifted to placeholder dates (2025-01-01, etc.)
+- **Financial values** → rounded dummy numbers
+- **Medical info** → [medication], [condition]
+- **Credentials** → sk-XXXX, /Users/demo/...
+- **Paths with usernames** → anonymized
+
+## Key features
+
+- **Toggle** — `/recording` switches it on/off
+- **Consistent** — same real name maps to the same fake name throughout the session
+- **Structure-preserving** — emails become fake emails, not [REDACTED]
+- **Non-destructive** — only affects what's displayed, not files on disk
+
+## When to use
+
+Any time you're about to demo Claude Code, screen-share, or record a session where sensitive data might appear in the output.

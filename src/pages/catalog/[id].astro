@@ -29,13 +29,7 @@ const { Content } = await render(skill);
 
     <div class="ornament"></div>
 
-    {skill.data.auto_description && (
-      <section class="skill-description">
-        <p>{skill.data.auto_description}</p>
-      </section>
-    )}
-
-    <div class="skill-body">
+    <div class="skill-body prose">
       <Content />
     </div>
 
@@ -102,8 +96,9 @@ const { Content } = await render(skill);
         )}
 
         <dt>Install</dt>
-        <dd>
+        <dd style="display:flex;flex-direction:column;gap:0.4rem;">
           <code class="install-cmd">/plugin install {skill.id}@glebis-skills</code>
+          <code class="install-cmd">npx skills add glebis/{skill.id}</code>
         </dd>
 
         {skill.data.auto_last_synced && (

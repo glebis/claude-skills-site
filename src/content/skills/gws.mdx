@@ -17,4 +17,27 @@ repo_path: "gws"
 dependencies: []
 ---
 
-This skill should be used when interacting with Google Workspace services via the gws CLI — Gmail (search, triage, send, labels, filters, drafts), Calendar (agenda, events, Meet conferencing), Drive (upload, list, share, download), Sheets (read, append), Docs, Tasks, Chat (send), People/Contacts, and cross-service workflows (standup, meeting prep, weekly digest, email-to-task). Triggers on queries like "check my email", "search Gmail", "send email", "calendar agenda", "create calendar event", "upload to Drive", "read spreadsheet", "create a task", "triage inbox", "find contact", "post to Chat".
+## What it does
+
+A unified CLI for the entire Google Workspace — Gmail, Calendar, Drive, Sheets, Docs, Slides, Tasks, People, Chat, Meet, Forms, Keep, and Admin. Also includes cross-service helper workflows that combine multiple services in one command.
+
+## Services
+
+- **Gmail** — triage unread, search, send, archive, label, filter, drafts
+- **Calendar** — today's agenda, create events, weekly view, Meet conferencing
+- **Drive** — upload, list, share, download files
+- **Sheets** — read ranges, append rows
+- **Tasks** — create and manage tasks
+- **Chat** — post messages to spaces
+- **People** — search contacts
+
+## Helper workflows
+
+- **standup-report** — today's meetings + open tasks in one view
+- **meeting-prep** — details for your next meeting
+- **email-to-task** — convert an email into a task
+- **weekly-digest** — week's meetings + unread summary
+
+## When to use
+
+Any time you'd normally open Gmail, Google Calendar, Drive, or any other Google Workspace app in a browser. The `gws` CLI handles it all from the terminal.

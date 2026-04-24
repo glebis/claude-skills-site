@@ -17,4 +17,23 @@ repo_path: "health-data"
 dependencies: []
 ---
 
-Query Apple Health SQLite database for vitals, activity, sleep, and workouts. Supports Markdown, JSON, and FHIR R4 output formats. This skill should be used when analyzing health metrics, generating health reports, answering questions about fitness or sleep patterns, or exporting health data in standard formats.
+## What it does
+
+Queries a local SQLite database containing 6.3M+ Apple Health records across 43 metrics. Provides pre-built queries for common health questions plus direct SQL access for custom analysis.
+
+## Pre-built queries
+
+- **Daily summary** — steps, calories, heart rate (avg/min/max), exercise minutes, distance, activity rings
+- **Weekly trends** — week-over-week comparison of key metrics
+- **Sleep analysis** — sleep patterns and quality over configurable time ranges
+- **Vitals** — latest heart rate, blood pressure, resting HR
+- **Activity rings** — move, exercise, and stand ring progress over time
+- **Workouts** — history filterable by type (Running, Walking, etc.)
+
+## Output formats
+
+Markdown (human-readable), JSON (for processing), FHIR R4 (healthcare standard), and ASCII tables.
+
+## When to use
+
+When you want to understand your health data — daily check-ins, trend analysis, sleep quality review, workout history, or exporting data for external tools.

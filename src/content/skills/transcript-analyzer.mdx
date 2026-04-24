@@ -17,4 +17,24 @@ repo_path: "transcript-analyzer"
 dependencies: []
 ---
 
-This skill analyzes meeting transcripts to extract decisions, action items, opinions, questions, and terminology using Cerebras AI (llama-3.3-70b). Use this skill when the user asks to analyze a transcript, extract action items from meetings, find decisions in conversations, build glossaries from discussions, or summarize key points from recorded meetings.
+## What it does
+
+Runs meeting transcripts through Cerebras AI (llama-3.3-70b) to extract structured data — decisions, action items, opinions, questions, and terminology — at high speed.
+
+## What it extracts
+
+- **Decisions** — what was decided, by whom, with any caveats
+- **Action items** — who needs to do what, with deadlines if mentioned
+- **Opinions** — positions expressed by participants on key topics
+- **Questions** — unresolved questions raised during the meeting
+- **Terminology** — domain-specific terms and jargon used, with definitions inferred from context
+
+## Key features
+
+- **Fast** — Cerebras inference provides near-instant extraction even for long transcripts
+- **Structured output** — clean JSON and markdown output for downstream processing
+- **Glossary building** — automatically builds a glossary from specialized terms used in discussion
+
+## When to use
+
+When you have a meeting transcript and need to quickly extract what was decided, what needs to be done, and what was discussed — without reading the entire thing. Works well as a downstream step after Fathom or Granola sync.

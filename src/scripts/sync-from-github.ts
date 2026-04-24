@@ -64,6 +64,12 @@ function loadExistingMdx(slug: string): Record<string, string> {
     const m = line.match(/^(\w+):\s*(.+)$/);
     if (m) fields[m[1]] = m[2];
   }
+
+  const body = content.slice(fmMatch[0].length).trim();
+  if (body && body.startsWith("##")) {
+    fields._body = body;
+  }
+
   return fields;
 }
 
@@ -157,7 +163,7 @@ repo_path: "${skill.repoPath}"
 dependencies: ${dependencies || "[]"}
 ---
 
-${skill.description}
+${existing._body || skill.description}
 `;
 }
 
