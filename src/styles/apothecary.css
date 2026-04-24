@@ -398,6 +398,13 @@ footer a:hover {
   line-height: 1.5;
 }
 
+.skill-summary {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-light);
+  margin-bottom: 2rem;
+}
+
 .skill-body {
   font-size: 1rem;
   line-height: 1.75;

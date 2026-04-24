@@ -29,6 +29,10 @@ const { Content } = await render(skill);
 
     <div class="ornament"></div>
 
+    {skill.data.auto_description && (
+      <p class="skill-summary">{skill.data.auto_description}</p>
+    )}
+
     <div class="skill-body prose">
       <Content />
     </div>
