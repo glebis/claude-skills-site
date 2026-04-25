@@ -34,9 +34,9 @@ const { title, description = "Preparations for the working terminal." } = Astro.
   </head>
   <body>
     <nav>
-      <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;padding-bottom:1rem;">
+      <div class="container nav-inner">
         <a href="/" class="brand">The Apothecary</a>
-        <div style="display:flex;gap:1.5rem;font-size:0.85rem;align-items:center;">
+        <div class="nav-links">
           <a href="/catalog">Catalog</a>
           <a href="/bundles">Cabinets</a>
           <a href="https://github.com/glebis/claude-skills" target="_blank">GitHub</a>
@@ -52,7 +52,7 @@ const { title, description = "Preparations for the working terminal." } = Astro.
     <footer>
       <p>Preparations for the working terminal. Each compound tested by hand.</p>
       <p style="margin-top:0.25rem;">No guarantees, no refunds. Results vary by practitioner.</p>
-      <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:1.5rem;">
+      <div class="footer-links">
         <a href="https://github.com/glebis" style="color:var(--ink-dim);transition:color 0.2s;">GitHub</a>
         <a href="https://x.com/glebkalinin" style="color:var(--ink-dim);transition:color 0.2s;">X</a>
         <a href="https://linkedin.com/in/glebkalinin" style="color:var(--ink-dim);transition:color 0.2s;">LinkedIn</a>

@@ -1,5 +1,5 @@
 /** @jsxImportSource preact */
-import { useState, useMemo } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 
 interface Skill {
   id: string;
@@ -16,12 +16,50 @@ interface Props {
 }
 
 export default function CatalogFilter({ skills, bundles }: Props) {
-  const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
-  const initialTag = params?.get("tag") || "";
-  const initialBundle = params?.get("bundle") || null;
+  const [query, setQuery] = useState("");
+  const [activeBundle, setActiveBundle] = useState<string | null>(null);
 
-  const [query, setQuery] = useState(initialTag);
-  const [activeBundle, setActiveBundle] = useState<string | null>(initialBundle);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setQuery(params.get("tag") || params.get("q") || "");
+    setActiveBundle(params.get("bundle") || null);
+  }, []);
+
+  const updateUrl = (nextQuery: string, nextBundle: string | null) => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (nextQuery.trim()) {
+      params.set("tag", nextQuery.trim());
+    } else {
+      params.delete("tag");
+      params.delete("q");
+    }
+
+    if (nextBundle) {
+      params.set("bundle", nextBundle);
+    } else {
+      params.delete("bundle");
+    }
+
+    const nextSearch = params.toString();
+    const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+    window.history.replaceState(null, "", nextUrl);
+  };
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    updateUrl(value, activeBundle);
+  };
+
+  const handleBundleChange = (bundle: string | null) => {
+    setActiveBundle(bundle);
+    updateUrl(query, bundle);
+  };
+
+  const clearQuery = () => {
+    handleQueryChange("");
+  };
 
   const filtered = useMemo(() => {
     let result = skills;
@@ -36,7 +74,7 @@ export default function CatalogFilter({ skills, bundles }: Props) {
         (s) =>
           s.name.toLowerCase().includes(q) ||
           s.tagline.toLowerCase().includes(q) ||
-          s.tags.some((t) => t.includes(q))
+          s.tags.some((t) => t.toLowerCase().includes(q))
       );
     }
 
@@ -56,15 +94,15 @@ export default function CatalogFilter({ skills, bundles }: Props) {
 
   return (
     <div>
-      <div style={{ marginBottom: "1.5rem" }}>
+      <div style={{ position: "relative", marginBottom: query ? "0.75rem" : "1.5rem" }}>
         <input
           type="text"
           placeholder="Search preparations..."
           value={query}
-          onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+          onInput={(e) => handleQueryChange((e.target as HTMLInputElement).value)}
           style={{
             width: "100%",
-            padding: "0.6rem 1rem",
+            padding: query ? "0.6rem 5.25rem 0.6rem 1rem" : "0.6rem 1rem",
             background: "var(--bg-surface)",
             border: "1px solid var(--rule)",
             borderRadius: "4px",
@@ -74,11 +112,62 @@ export default function CatalogFilter({ skills, bundles }: Props) {
             outline: "none",
           }}
         />
+        {query && (
+          <button
+            type="button"
+            onClick={clearQuery}
+            aria-label="Clear search"
+            style={{
+              position: "absolute",
+              right: "0.45rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+              padding: "0.24rem 0.65rem",
+              background: "transparent",
+              border: "1px solid var(--rule)",
+              borderRadius: "3px",
+              color: "var(--ink-muted)",
+              fontFamily: "'Monaspace Argon', monospace",
+              fontSize: "0.62rem",
+              cursor: "pointer",
+            }}
+          >
+            Clear
+          </button>
+        )}
       </div>
+
+      {query && (
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+          <span style={{ color: "var(--ink-dim)", fontSize: "0.68rem", fontFamily: "'Monaspace Argon', monospace" }}>
+            Search filter
+          </span>
+          <button
+            type="button"
+            onClick={clearQuery}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+              padding: "0.2rem 0.55rem",
+              background: "var(--bg-raised)",
+              border: "1px solid var(--rule)",
+              borderRadius: "3px",
+              color: "var(--ink-light)",
+              fontFamily: "'Monaspace Argon', monospace",
+              fontSize: "0.64rem",
+              cursor: "pointer",
+            }}
+          >
+            {query}
+            <span aria-hidden="true" style={{ color: "var(--accent)" }}>×</span>
+          </button>
+        </div>
+      )}
 
       <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
         <button
-          onClick={() => setActiveBundle(null)}
+          onClick={() => handleBundleChange(null)}
           style={{
             padding: "0.25rem 0.7rem",
             background: !activeBundle ? "var(--accent-dim)" : "transparent",
@@ -98,7 +187,7 @@ export default function CatalogFilter({ skills, bundles }: Props) {
           return (
             <button
               key={b}
-              onClick={() => setActiveBundle(isActive ? null : b)}
+              onClick={() => handleBundleChange(isActive ? null : b)}
               style={{
                 padding: "0.25rem 0.7rem",
                 background: isActive ? "var(--accent-dim)" : "transparent",
