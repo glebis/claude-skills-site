@@ -393,10 +393,28 @@ footer a:hover {
   border: 1px solid var(--rule);
   border-radius: 4px;
   padding: 1.5rem 1.75rem;
+  overflow: hidden;
+}
+.dispensary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 .dispensary h3 {
   margin-bottom: 1.25rem;
   color: var(--ink);
+}
+.dispensary-activity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.dispensary-grid {
+  display: grid;
+  grid-template-columns: minmax(8rem, 140px) minmax(0, 1fr);
+  gap: 0.75rem 1rem;
 }
 .dispensary dt {
   font-variant: small-caps;
@@ -408,6 +426,8 @@ footer a:hover {
   color: var(--ink-light);
   font-family: "Monaspace Argon", monospace;
   font-size: 0.78rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .dispensary a {
   color: var(--accent);
@@ -427,6 +447,9 @@ footer a:hover {
   border-radius: 3px;
   padding: 0.3rem 0.6rem;
   display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
   user-select: all;
   cursor: pointer;
 }
@@ -442,6 +465,11 @@ footer a:hover {
 .dispensary .tag:hover {
   border-color: var(--accent-dim);
   color: var(--accent);
+}
+.install-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 /* ── Detail page ── */
@@ -836,6 +864,33 @@ footer a:hover {
   }
   .activity-card {
     grid-template-columns: 1fr;
+  }
+  .dispensary {
+    padding: 1.1rem;
+  }
+  .dispensary-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .dispensary h3 {
+    margin-bottom: 0.5rem;
+  }
+  .dispensary-grid {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .dispensary dt {
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+  }
+  .dispensary dd {
+    font-size: 0.72rem;
+  }
+  .dispensary .install-cmd {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
   }
   .footer-links {
     gap: 0.5rem 1rem;

@@ -39,17 +39,17 @@ const { Content } = await render(skill);
     </div>
 
     <aside class="dispensary">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div class="dispensary-header">
         <h3>Dispensary Notes</h3>
         {skill.data.auto_activity.length > 0 && (
-          <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div class="dispensary-activity">
             <span style="font-family:'Monaspace Argon',monospace;font-size:0.6rem;color:var(--ink-dim);">12w activity</span>
             <Sparkline data={skill.data.auto_activity} width={100} height={24} />
           </div>
         )}
       </div>
 
-      <dl style="display:grid;grid-template-columns:140px 1fr;gap:0.75rem 1rem;">
+      <dl class="dispensary-grid">
         {skill.data.apothecary_name && (
           <>
             <dt>Also Known As</dt>
@@ -101,7 +101,7 @@ const { Content } = await render(skill);
         )}
 
         <dt>Install</dt>
-        <dd style="display:flex;flex-direction:column;gap:0.4rem;">
+        <dd class="install-list">
           <code class="install-cmd">/plugin install {skill.id}@glebis-skills</code>
           <code class="install-cmd">npx skills add glebis/{skill.id}</code>
         </dd>
