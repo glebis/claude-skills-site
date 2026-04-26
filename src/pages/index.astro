@@ -129,6 +129,11 @@ const cabinetColors: Record<string, string> = {
         {
           activeSkills.map((skill) => (
             <a href={`/catalog/${skill.id}`} class="card activity-card">
+              {skill.data.hero_image && (
+                <div class="activity-image">
+                  <img src={skill.data.hero_image} alt="" loading="eager" />
+                </div>
+              )}
               <div>
                 <p class="card-title">{skill.data.name}</p>
                 <p class="card-description" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
