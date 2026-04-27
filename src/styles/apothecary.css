@@ -642,6 +642,285 @@ footer a:hover {
   transition: color 0.2s ease;
 }
 
+/* ── Cabinet index and detail pages ── */
+.cabinet-index-page {
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+  padding-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+.cabinet-index-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 0.8fr);
+  gap: clamp(2rem, 7vw, 5rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+.cabinet-index-hero h1,
+.cabinet-detail-hero h1 {
+  font-size: clamp(3.1rem, 8vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+.cabinet-index-hero .state-line,
+.cabinet-detail-hero .state-line {
+  max-width: 42rem;
+}
+.cabinet-index-plate {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--rule);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--bg-surface) 86%, var(--accent) 14%), var(--bg-surface));
+  box-shadow: var(--shadow-tight);
+}
+.cabinet-index-drawer {
+  min-height: 5.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--cabinet-color, var(--accent)) 16%, transparent), transparent 55%),
+    linear-gradient(90deg, color-mix(in oklch, var(--ink) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(0deg, color-mix(in oklch, var(--ink) 4%, transparent) 1px, transparent 1px);
+  background-size: auto, 2.6rem 2.6rem, 2.6rem 2.6rem;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.cabinet-index-drawer:nth-child(4n) {
+  border-right: 0;
+}
+.cabinet-index-drawer:nth-child(n + 5) {
+  border-bottom: 0;
+}
+.cabinet-index-drawer:hover {
+  background-color: color-mix(in oklch, var(--cabinet-color, var(--accent)) 12%, transparent);
+}
+.cabinet-index-drawer span {
+  font-family: "Monaspace Argon", monospace;
+  color: var(--cabinet-color, var(--accent));
+  font-size: 0.82rem;
+}
+.cabinet-index-drawer small {
+  color: var(--ink-muted);
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.62rem;
+}
+.cabinet-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(31rem, 1fr));
+  gap: 1rem;
+}
+.cabinet-card {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.78fr) minmax(0, 1fr);
+  min-height: 18rem;
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--cabinet-color, var(--accent)) 10%, transparent), transparent 55%),
+    var(--bg-surface);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.cabinet-card:hover {
+  border-color: color-mix(in oklch, var(--cabinet-color, var(--accent)) 55%, var(--rule));
+  box-shadow: var(--shadow-tight);
+  transform: translateY(-1px);
+}
+.cabinet-card:hover .cabinet-media img {
+  transform: scale(1.035);
+  filter: sepia(4%) contrast(1.08);
+}
+.cabinet-card:hover .cabinet-name {
+  color: var(--cabinet-color, var(--accent));
+}
+.cabinet-media {
+  position: relative;
+  min-height: 100%;
+  background: var(--bg-raised);
+  border-right: 1px solid var(--rule);
+  overflow: hidden;
+}
+.cabinet-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, color-mix(in oklch, var(--bg-surface) 16%, transparent)),
+    linear-gradient(0deg, color-mix(in oklch, var(--bg-inkwash) 18%, transparent), transparent 55%);
+  pointer-events: none;
+}
+.cabinet-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 18rem;
+  object-fit: cover;
+  filter: sepia(12%) contrast(1.04);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+.cabinet-content {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.cabinet-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.cabinet-roman {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.65rem;
+  color: var(--cabinet-color, var(--accent));
+  letter-spacing: 0.05em;
+}
+.cabinet-name {
+  font-size: clamp(1.25rem, 2.8vw, 1.8rem);
+  font-weight: 400;
+  color: var(--ink);
+  transition: color 0.2s ease;
+}
+.cabinet-common-name {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.62rem;
+  color: var(--ink-dim);
+  margin-bottom: 0.8rem;
+}
+.cabinet-tagline {
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.cabinet-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.cabinet-skill-tag {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.58rem;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.1rem 0.4rem;
+  letter-spacing: 0.01em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.cabinet-card:hover .cabinet-skill-tag {
+  border-color: color-mix(in oklch, var(--cabinet-color, var(--accent)) 38%, var(--rule));
+}
+.cabinet-detail-page {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+.cabinet-detail-hero {
+  margin-top: 1rem;
+  border-block: 1px solid var(--rule);
+  background:
+    radial-gradient(circle at 78% 18%, color-mix(in oklch, var(--cabinet-color, var(--accent)) 16%, transparent), transparent 24rem),
+    var(--bg-aside);
+}
+.cabinet-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 0.95fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  padding-top: clamp(2rem, 6vw, 5rem);
+  padding-bottom: clamp(2rem, 6vw, 5rem);
+}
+.cabinet-detail-copy {
+  min-width: 0;
+}
+.cabinet-ledger {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.cabinet-ledger span {
+  font-family: "Monaspace Argon", monospace;
+  font-size: 0.62rem;
+  color: var(--ink-muted);
+  border: 1px solid color-mix(in oklch, var(--cabinet-color, var(--accent)) 35%, var(--rule));
+  background: color-mix(in oklch, var(--cabinet-color, var(--accent)) 8%, transparent);
+  border-radius: 3px;
+  padding: 0.22rem 0.55rem;
+}
+.cabinet-detail-image {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: var(--shadow-tight);
+  background: var(--bg-raised);
+}
+.cabinet-detail-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 55%, color-mix(in oklch, var(--cabinet-color, var(--accent)) 12%, transparent)),
+    linear-gradient(0deg, color-mix(in oklch, var(--bg-inkwash) 22%, transparent), transparent 48%);
+  pointer-events: none;
+}
+.cabinet-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(10%) contrast(1.05);
+}
+.cabinet-detail-body {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.82fr) minmax(0, 1.35fr);
+  gap: clamp(2rem, 6vw, 4rem);
+  padding-top: clamp(3rem, 7vw, 5rem);
+}
+.cabinet-detail-note {
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+  border-top: 1px solid color-mix(in oklch, var(--cabinet-color, var(--accent)) 38%, var(--rule));
+  padding-top: 1.2rem;
+}
+.cabinet-detail-note .skill-body {
+  margin-bottom: 0;
+}
+.cabinet-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+.cabinet-skill-card {
+  min-height: 10.5rem;
+}
+.cabinet-skill-image {
+  aspect-ratio: 16 / 8;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.85rem;
+  background: var(--bg-raised);
+}
+.cabinet-skill-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(10%) contrast(1.05);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+.cabinet-skill-card:hover .cabinet-skill-image img {
+  filter: sepia(0%) contrast(1.08);
+  transform: scale(1.03);
+}
+
 /* ── Compact list links (All Preparations index) ── */
 .compact-link {
   display: flex;
@@ -802,14 +1081,24 @@ footer a:hover {
 
 @media (max-width: 900px) {
   .specimen-band,
-  .recipe-strip {
+  .recipe-strip,
+  .cabinet-index-hero,
+  .cabinet-detail-layout,
+  .cabinet-detail-body {
     grid-template-columns: 1fr;
   }
-  .specimen-note {
+  .specimen-note,
+  .cabinet-detail-note {
     position: static;
   }
   .cabinet-grid {
     grid-template-columns: 1fr;
+  }
+  .cabinet-showcase {
+    grid-template-columns: 1fr;
+  }
+  .cabinet-detail-image {
+    order: -1;
   }
 }
 @media (max-width: 620px) {
@@ -880,6 +1169,56 @@ footer a:hover {
   }
   .bundle-card {
     min-height: 10.5rem;
+  }
+  .cabinet-index-page,
+  .cabinet-detail-page {
+    padding-top: 2rem;
+  }
+  .cabinet-index-hero h1,
+  .cabinet-detail-hero h1 {
+    font-size: clamp(2.7rem, 16vw, 4.4rem);
+  }
+  .cabinet-index-plate {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cabinet-index-drawer:nth-child(4n) {
+    border-right: 1px solid var(--rule);
+  }
+  .cabinet-index-drawer:nth-child(2n) {
+    border-right: 0;
+  }
+  .cabinet-index-drawer:nth-child(n + 5) {
+    border-bottom: 1px solid var(--rule);
+  }
+  .cabinet-index-drawer:nth-child(n + 7) {
+    border-bottom: 0;
+  }
+  .cabinet-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .cabinet-media {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cabinet-media img {
+    min-height: 13rem;
+  }
+  .cabinet-title-row {
+    align-items: flex-start;
+  }
+  .cabinet-detail-layout {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+  .cabinet-detail-image {
+    aspect-ratio: 16 / 9;
+  }
+  .cabinet-ledger {
+    gap: 0.35rem;
+  }
+  .cabinet-skill-grid {
+    grid-template-columns: 1fr;
   }
   .activity-card {
     grid-template-columns: 1fr;
