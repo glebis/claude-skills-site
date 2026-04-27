@@ -1,13 +1,13 @@
 <div
   class="hero-panorama"
   data-hero-panorama
-  data-texture="/images/apothecary-360-panorama.jpg"
+  data-texture="/images/apothecary-360-panorama.png"
   aria-hidden="true"
 >
   <canvas class="hero-panorama-canvas" data-hero-panorama-canvas></canvas>
   <img
     class="hero-panorama-fallback"
-    src="/images/apothecary-360-panorama.jpg"
+    src="/images/apothecary-360-panorama.png"
     alt=""
     loading="eager"
     decoding="async"
@@ -33,6 +33,7 @@
   roots.forEach((root) => {
     const canvas = root.querySelector("[data-hero-panorama-canvas]");
     const textureUrl = root.getAttribute("data-texture");
+    const interactionSurface = root.closest(".home-hero") || root;
 
     if (!(canvas instanceof HTMLCanvasElement) || !textureUrl) return;
 
@@ -42,7 +43,8 @@
       alpha: true,
       powerPreference: "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.25));
+    renderer.outputColorSpace = SRGBColorSpace;
 
     const scene = new Scene();
     const camera = new PerspectiveCamera(68, 1, 0.1, 1000);
@@ -59,13 +61,16 @@
     const room = new Mesh(geometry, material);
     scene.add(room);
 
-    let yaw = 210;
-    let pitch = 0;
+    let baseYaw = 210;
+    let basePitch = -1;
+    let yaw = baseYaw;
+    let pitch = basePitch;
     let targetYaw = yaw;
     let targetPitch = pitch;
     let lastX = 0;
     let lastY = 0;
     let isDragging = false;
+    let hasDragged = false;
     let lastInteraction = performance.now();
     let frameId = 0;
 
@@ -89,28 +94,42 @@
       const width = Math.max(1, Math.round(rect.width));
       const height = Math.max(1, Math.round(rect.height));
       camera.aspect = width / height;
-      camera.fov = width < 640 ? 82 : 68;
+      camera.fov = width < 640 ? 72 : width < 900 ? 64 : 58;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height, false);
     };
 
     const onPointerDown = (event) => {
+      if (event.target.closest("a, button")) return;
       isDragging = true;
+      hasDragged = true;
       lastX = event.clientX;
       lastY = event.clientY;
       lastInteraction = performance.now();
       root.classList.add("is-dragging");
-      canvas.setPointerCapture(event.pointerId);
+      if (interactionSurface.setPointerCapture) {
+        interactionSurface.setPointerCapture(event.pointerId);
+      }
     };
 
     const onPointerMove = (event) => {
-      if (!isDragging) return;
+      if (!isDragging) {
+        if (hasDragged || prefersReducedMotion.matches || event.pointerType !== "mouse") return;
+
+        const rect = root.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        targetYaw = baseYaw + x * 10;
+        targetPitch = clamp(basePitch - y * 6, -18, 16);
+        return;
+      }
+
       const dx = event.clientX - lastX;
       const dy = event.clientY - lastY;
       lastX = event.clientX;
       lastY = event.clientY;
-      targetYaw -= dx * 0.12;
-      targetPitch = clamp(targetPitch + dy * 0.1, -72, 72);
+      targetYaw -= dx * 0.16;
+      targetPitch = clamp(targetPitch + dy * 0.13, -72, 72);
       lastInteraction = performance.now();
     };
 
@@ -118,9 +137,15 @@
       if (!isDragging) return;
       isDragging = false;
       root.classList.remove("is-dragging");
-      if (canvas.hasPointerCapture(event.pointerId)) {
-        canvas.releasePointerCapture(event.pointerId);
+      if (interactionSurface.hasPointerCapture?.(event.pointerId)) {
+        interactionSurface.releasePointerCapture(event.pointerId);
       }
+    };
+
+    const onPointerLeave = () => {
+      if (isDragging || hasDragged) return;
+      targetYaw = baseYaw;
+      targetPitch = basePitch;
     };
 
     const onWheel = (event) => {
@@ -145,11 +170,12 @@
     observer.observe(root);
     resize();
 
-    canvas.addEventListener("pointerdown", onPointerDown);
-    canvas.addEventListener("pointermove", onPointerMove);
-    canvas.addEventListener("pointerup", stopDragging);
-    canvas.addEventListener("pointercancel", stopDragging);
-    canvas.addEventListener("wheel", onWheel, { passive: false });
+    interactionSurface.addEventListener("pointerdown", onPointerDown);
+    interactionSurface.addEventListener("pointermove", onPointerMove);
+    interactionSurface.addEventListener("pointerup", stopDragging);
+    interactionSurface.addEventListener("pointercancel", stopDragging);
+    interactionSurface.addEventListener("pointerleave", onPointerLeave);
+    interactionSurface.addEventListener("wheel", onWheel, { passive: false });
 
     frameId = window.requestAnimationFrame(animate);
 
