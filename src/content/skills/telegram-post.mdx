@@ -1,0 +1,34 @@
+---
+name: "telegram-post"
+tagline: "Create, preview, and publish formatted posts to Telegram channels."
+apothecary_name: "The Town Crier"
+bundle: communication
+tags: ["telegram","publishing","social","markdown"]
+accent_color: amber
+auto_description: "Create, preview, and send formatted Telegram posts from draft markdown files. Supports multi-part messages, video attachments, channel-specific footers, and post-publish automation (move to published, update index)."
+auto_triggers: []
+auto_tools: []
+auto_last_synced: "2026-04-27"
+auto_last_commit: "2026-04-27"
+auto_activity: [0,0,0,0,0,0,0,0,0,0,0,0]
+install_command: ""
+repo_path: "telegram-post"
+dependencies: ["telegram"]
+---
+
+## What it does
+
+Manages the full lifecycle of Telegram channel posts: creates draft files with proper frontmatter, converts markdown to Telegram HTML, previews via dry-run, sends to Saved Messages or directly to channels, and handles post-publish automation (moving drafts to published, updating channel index).
+
+## Key features
+
+- **Draft management** — creates structured draft files with channel-aware paths, tags, and language defaults
+- **Safe publishing** — dry-run preview, default target is Saved Messages (not channel), formatting validation refuses to send if stray markdown detected
+- **Multi-part splitting** — splits on `---` markers, respects 4096 char limit per message
+- **Video support** — attaches video as caption on first message, resolves paths automatically
+- **Post-publish automation** — updates frontmatter, moves to published folder, adds to channel index
+- **4 configured channels** — klodkot, mentalhealthtech, toolbuildingape, opytnymputem
+
+## When to use
+
+When you want to draft, preview, and publish posts to Telegram channels from Obsidian/terminal without touching the Telegram app directly.

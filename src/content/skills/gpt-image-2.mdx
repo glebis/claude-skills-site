@@ -1,17 +1,16 @@
 ---
 name: "gpt-image-2"
-tagline: "Generate and edit images with OpenAI. Best-in-class text rendering."
+tagline: "Generate and edit images with OpenAI. 27 style presets, draft mode, interactive workflow."
 apothecary_name: "The Illustrator's Compound"
 bundle: content-publishing
-tags: ["images","generation","openai"]
+tags: ["images","generation","openai","carousel","social-media","presets"]
 accent_color: amber
-# hero_image:
-auto_description: "Generate and edit images using OpenAI's GPT Image 2 API. Supports style presets (including text-heavy ones like infographic/diagram/poster), platform-specific sizing (YouTube/slides/blog), thinking mode for complex compositions, variants with contact sheets, image editing, reference images for style transfer, cost estimation, and OpenRouter support. This skill should be used when the user requests image generation via OpenAI/GPT Image 2, or when high-quality text rendering in images is needed."
+auto_description: "Interactive AI image generation skill with 27 style presets (editorial, bauhaus, pixar, trading-card, nordic, flat-social, linkedin-hero, and more), draft-first workflow ($0.006/image for iteration), photo editing, carousel generation, and cost controls. Guides users through creation step-by-step."
 auto_triggers: []
 auto_tools: []
-auto_last_synced: "2026-04-23"
-auto_last_commit: "2026-04-23"
-auto_activity: [0,0,0,0,0,0,0,0,0,0,0,7]
+auto_last_synced: "2026-04-27"
+auto_last_commit: "2026-04-27"
+auto_activity: [0,0,0,0,0,0,0,0,0,0,0,12]
 install_command: ""
 repo_path: "gpt-image-2"
 dependencies: []
@@ -19,18 +18,18 @@ dependencies: []
 
 ## What it does
 
-Generates and edits images from text prompts via OpenAI's GPT Image 2 API. Excels at images with readable text — infographics, diagrams, posters, slides — where text rendering quality matters.
+Generates and edits images via OpenAI's GPT Image 2 API with an interactive, guided workflow. Excels at images with readable text — infographics, diagrams, posters, social media cards. Guides you through style selection, drafts cheap previews, then generates finals.
 
 ## Key features
 
-- **Style presets** — editorial, infographic, diagram, poster, grain, wireframe, and more
-- **Platform sizing** — auto-crops for YouTube thumbnails (1280x720), slides, blog headers
-- **Thinking mode** — the model reasons about composition before rendering, producing better layouts for complex images
-- **Variants** — generate N variations of the same concept with an auto-generated contact sheet
-- **Image editing** — modify existing images with text instructions
-- **Style transfer** — use a reference image to match its aesthetic in a new generation
-- **Cost estimation** — `--estimate` flag to preview cost before generating
+- **27 style presets** — editorial, bauhaus, constellation, pixar, trading-card, action-figure, cinematic, nordic, flat-social, linkedin-hero, social-bold, and more
+- **Draft-first workflow** — iterate at $0.006/image, upgrade to $0.21 for finals (35× savings)
+- **Photo editing** — transform your photos into any preset style via multipart upload
+- **Platform sizing** — auto-crops for YouTube, Instagram square, LinkedIn, slides, Pinterest
+- **Carousel mode** — generate cohesive 10-slide stories for LinkedIn/Instagram
+- **Cost confirmation** — prompts before spending >$0.50, shows estimates before every batch
+- **Interactive guidance** — skill walks you through style, platform, draft→final flow step by step
 
 ## When to use
 
-When you need generated images with high-quality text rendering (infographics, diagrams, posters) or want more control over composition than what simpler generators offer. For faster/cheaper iteration, try nano-banana instead.
+When you need generated images with readable text, social media carousels, LinkedIn quote cards, or want to transform photos into artistic styles. Use draft mode for cheap iteration, finals for publishing.

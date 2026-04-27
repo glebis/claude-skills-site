@@ -1,0 +1,33 @@
+---
+name: "sketch"
+tagline: "Collaborative SVG canvas — Claude draws, you edit, changes sync in real-time."
+apothecary_name: "The Atelier"
+bundle: developer-tools
+tags: ["svg","canvas","visual","prototyping","collaboration"]
+accent_color: cyan
+auto_description: "Opens a Fabric.js-based SVG editor in the browser for collaborative visual prototyping. Claude can write and read SVG through MCP tools while the user edits interactively. Changes sync in real-time via WebSocket."
+auto_triggers: []
+auto_tools: []
+auto_last_synced: "2026-04-27"
+auto_last_commit: "2026-04-27"
+auto_activity: [0,0,0,0,0,0,0,0,0,0,0,0]
+install_command: ""
+repo_path: "sketch"
+dependencies: []
+---
+
+## What it does
+
+Opens a Fabric.js-based SVG editor in the browser and connects it to Claude via MCP tools and WebSocket. Claude can draw, add elements, and read the canvas while you edit interactively in the browser. Supports multiple named canvases, templates, real-time streaming, and object locking.
+
+## Key features
+
+- **Bidirectional editing** — Claude draws programmatically, you edit visually, both see changes instantly
+- **Streaming mode** — call add_element repeatedly to build up a UI in real-time while the user watches
+- **Templates** — save and load canvas states as reusable JSON templates with preserved layout
+- **Multi-canvas** — each canvas opens in its own browser tab with independent state
+- **12 MCP tools** — open, get/set SVG, add elements, add textboxes, lock/unlock, save/load templates, clear, focus, list, close
+
+## When to use
+
+When you need visual prototyping, diagram creation, or collaborative SVG editing where both you and Claude contribute to the same canvas in real-time.

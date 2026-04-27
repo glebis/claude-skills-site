@@ -1,0 +1,33 @@
+---
+name: "daydream"
+tagline: "Mine your Obsidian vault for non-obvious connections between notes."
+apothecary_name: "The Default Mode"
+bundle: thinking-strategy
+tags: ["obsidian","connections","creativity","research"]
+accent_color: purple
+auto_description: "Multi-agent system that mines the Obsidian vault for non-obvious connections between notes, mimicking the brain's default mode network. Samples random note pairs, synthesizes connections via Sonnet, filters with Haiku critic. Inspired by Gwern's LLM Daydreaming."
+auto_triggers: []
+auto_tools: []
+auto_last_synced: "2026-04-27"
+auto_last_commit: "2026-04-27"
+auto_activity: [0,0,0,0,0,0,0,0,0,0,0,0]
+install_command: ""
+repo_path: "daydream"
+dependencies: []
+---
+
+## What it does
+
+Mimics the brain's default mode network by sampling 50 recency-weighted random note pairs from your vault, synthesizing connections via parallel Sonnet agents, then filtering for quality with a Haiku critic. Saves high-scoring insights as individual notes and a daily digest.
+
+## Key features
+
+- **Multi-agent architecture** — parallel Sonnet synthesis + Haiku quality filtering (score >= 7.0)
+- **Recency-weighted sampling** — prioritizes notes modified in the last 120 days
+- **Deduplication** — tracks sampled pairs in history log to avoid repetition
+- **Rich output** — individual insight notes with wikilinks, daily digest with stats, daily note summary
+- **Zero dependencies** — pure Claude Code tools (Glob, Read, Write, Bash, Task)
+
+## When to use
+
+When you want serendipitous connections between your notes without manually browsing — run it weekly or after adding substantial new content to your vault. Costs approximately $0.40-0.50 per run.
