@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import HeroAmbience from "../components/HeroAmbience.astro";
 import HeroPanorama from "../components/HeroPanorama.astro";
 import Sparkline from "../components/Sparkline.astro";
 import { getCollection } from "astro:content";
@@ -57,6 +58,7 @@ const cabinetColors: Record<string, string> = {
 <Base title="Home">
   <section class="home-hero home-hero-3d" aria-label="The Apothecary">
     <HeroPanorama />
+    <HeroAmbience />
     <div class="home-hero-panel">
       <p class="hero-kicker">Est. 2025 · terminal formulary</p>
       <h1>The Apothecary</h1>
