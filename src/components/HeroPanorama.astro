@@ -95,7 +95,7 @@
       const width = Math.max(1, Math.round(rect.width));
       const height = Math.max(1, Math.round(rect.height));
       camera.aspect = width / height;
-      camera.fov = width < 640 ? 72 : width < 900 ? 64 : 58;
+      camera.fov = width < 640 ? 82 : width < 900 ? 78 : 74;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height, false);
     };
@@ -152,7 +152,7 @@
     const onWheel = (event) => {
       if (!event.shiftKey && !event.metaKey && !event.ctrlKey) return;
       event.preventDefault();
-      camera.fov = clamp(camera.fov + event.deltaY * 0.025, 48, 92);
+      camera.fov = clamp(camera.fov + event.deltaY * 0.025, 62, 94);
       camera.updateProjectionMatrix();
       lastInteraction = performance.now();
     };
