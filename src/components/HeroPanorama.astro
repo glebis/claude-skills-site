@@ -1,0 +1,165 @@
+<div
+  class="hero-panorama"
+  data-hero-panorama
+  data-texture="/images/apothecary-360-panorama.jpg"
+  aria-hidden="true"
+>
+  <canvas class="hero-panorama-canvas" data-hero-panorama-canvas></canvas>
+  <img
+    class="hero-panorama-fallback"
+    src="/images/apothecary-360-panorama.jpg"
+    alt=""
+    loading="eager"
+    decoding="async"
+  />
+</div>
+
+<script>
+  import {
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera,
+    Scene,
+    SphereGeometry,
+    SRGBColorSpace,
+    TextureLoader,
+    WebGLRenderer,
+    MathUtils,
+  } from "three";
+
+  const roots = document.querySelectorAll("[data-hero-panorama]");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  roots.forEach((root) => {
+    const canvas = root.querySelector("[data-hero-panorama-canvas]");
+    const textureUrl = root.getAttribute("data-texture");
+
+    if (!(canvas instanceof HTMLCanvasElement) || !textureUrl) return;
+
+    const renderer = new WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(68, 1, 0.1, 1000);
+    const geometry = new SphereGeometry(500, 96, 64);
+    geometry.scale(-1, 1, 1);
+
+    const texture = new TextureLoader().load(textureUrl, () => {
+      root.classList.add("is-ready");
+    });
+    texture.colorSpace = SRGBColorSpace;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+    const material = new MeshBasicMaterial({ map: texture });
+    const room = new Mesh(geometry, material);
+    scene.add(room);
+
+    let yaw = 210;
+    let pitch = 0;
+    let targetYaw = yaw;
+    let targetPitch = pitch;
+    let lastX = 0;
+    let lastY = 0;
+    let isDragging = false;
+    let lastInteraction = performance.now();
+    let frameId = 0;
+
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+    const aimCamera = () => {
+      yaw += (targetYaw - yaw) * 0.12;
+      pitch += (targetPitch - pitch) * 0.12;
+
+      const phi = MathUtils.degToRad(90 - pitch);
+      const theta = MathUtils.degToRad(yaw);
+      camera.lookAt(
+        500 * Math.sin(phi) * Math.cos(theta),
+        500 * Math.cos(phi),
+        500 * Math.sin(phi) * Math.sin(theta),
+      );
+    };
+
+    const resize = () => {
+      const rect = root.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width));
+      const height = Math.max(1, Math.round(rect.height));
+      camera.aspect = width / height;
+      camera.fov = width < 640 ? 82 : 68;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    };
+
+    const onPointerDown = (event) => {
+      isDragging = true;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastInteraction = performance.now();
+      root.classList.add("is-dragging");
+      canvas.setPointerCapture(event.pointerId);
+    };
+
+    const onPointerMove = (event) => {
+      if (!isDragging) return;
+      const dx = event.clientX - lastX;
+      const dy = event.clientY - lastY;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      targetYaw -= dx * 0.12;
+      targetPitch = clamp(targetPitch + dy * 0.1, -72, 72);
+      lastInteraction = performance.now();
+    };
+
+    const stopDragging = (event) => {
+      if (!isDragging) return;
+      isDragging = false;
+      root.classList.remove("is-dragging");
+      if (canvas.hasPointerCapture(event.pointerId)) {
+        canvas.releasePointerCapture(event.pointerId);
+      }
+    };
+
+    const onWheel = (event) => {
+      if (!event.shiftKey && !event.metaKey && !event.ctrlKey) return;
+      event.preventDefault();
+      camera.fov = clamp(camera.fov + event.deltaY * 0.025, 48, 92);
+      camera.updateProjectionMatrix();
+      lastInteraction = performance.now();
+    };
+
+    const animate = (time) => {
+      const idleFor = time - lastInteraction;
+      if (!prefersReducedMotion.matches && !isDragging && idleFor > 1400) {
+        targetYaw += 0.018;
+      }
+      aimCamera();
+      renderer.render(scene, camera);
+      frameId = window.requestAnimationFrame(animate);
+    };
+
+    const observer = new ResizeObserver(resize);
+    observer.observe(root);
+    resize();
+
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointermove", onPointerMove);
+    canvas.addEventListener("pointerup", stopDragging);
+    canvas.addEventListener("pointercancel", stopDragging);
+    canvas.addEventListener("wheel", onWheel, { passive: false });
+
+    frameId = window.requestAnimationFrame(animate);
+
+    document.addEventListener("astro:before-swap", () => {
+      window.cancelAnimationFrame(frameId);
+      observer.disconnect();
+      geometry.dispose();
+      material.dispose();
+      texture.dispose();
+      renderer.dispose();
+    }, { once: true });
+  });
+</script>
