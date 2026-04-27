@@ -977,6 +977,10 @@ footer a:hover {
     linear-gradient(90deg, color-mix(in oklch, var(--bg-inkwash) 97%, transparent) 0 30%, color-mix(in oklch, var(--bg-inkwash) 72%, transparent) 58%, color-mix(in oklch, var(--bg-inkwash) 18%, transparent)),
     linear-gradient(0deg, color-mix(in oklch, var(--bg-inkwash) 94%, transparent), transparent 58%);
 }
+.home-hero:focus-visible {
+  outline: 2px solid oklch(72% 0.12 72 / 0.8);
+  outline-offset: -2px;
+}
 .hero-panorama {
   position: absolute;
   inset: 0;

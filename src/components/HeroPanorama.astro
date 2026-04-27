@@ -37,6 +37,11 @@
 
     if (!(canvas instanceof HTMLCanvasElement) || !textureUrl) return;
 
+    if (!interactionSurface.hasAttribute("tabindex")) {
+      interactionSurface.setAttribute("tabindex", "0");
+    }
+    interactionSurface.setAttribute("aria-label", "Interactive apothecary panorama. Use arrow keys or drag to look around.");
+
     const renderer = new WebGLRenderer({
       canvas,
       antialias: true,
@@ -157,6 +162,31 @@
       lastInteraction = performance.now();
     };
 
+    const onKeyDown = (event) => {
+      if (event.altKey || event.metaKey || event.ctrlKey) return;
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home"].includes(event.key)) return;
+
+      const activeElement = document.activeElement;
+      if (activeElement && activeElement !== interactionSurface && activeElement.closest?.("a, button, input, textarea, select")) {
+        return;
+      }
+
+      event.preventDefault();
+      hasDragged = true;
+      lastInteraction = performance.now();
+
+      const step = event.shiftKey ? 12 : 6;
+      if (event.key === "ArrowLeft") targetYaw += step;
+      if (event.key === "ArrowRight") targetYaw -= step;
+      if (event.key === "ArrowUp") targetPitch = clamp(targetPitch + step * 0.55, -72, 72);
+      if (event.key === "ArrowDown") targetPitch = clamp(targetPitch - step * 0.55, -72, 72);
+      if (event.key === "Home") {
+        targetYaw = baseYaw;
+        targetPitch = basePitch;
+        hasDragged = false;
+      }
+    };
+
     const animate = (time) => {
       const idleFor = time - lastInteraction;
       if (!prefersReducedMotion.matches && !isDragging && idleFor > 1400) {
@@ -183,6 +213,7 @@
     interactionSurface.addEventListener("pointercancel", stopDragging);
     interactionSurface.addEventListener("pointerleave", onPointerLeave);
     interactionSurface.addEventListener("wheel", onWheel, { passive: false });
+    interactionSurface.addEventListener("keydown", onKeyDown);
 
     frameId = window.requestAnimationFrame(animate);
 
