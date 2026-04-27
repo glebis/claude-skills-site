@@ -951,6 +951,9 @@ footer a:hover {
   align-items: end;
   overflow: hidden;
   isolation: isolate;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   border-bottom: 1px solid var(--rule);
   background: var(--bg-inkwash);
 }

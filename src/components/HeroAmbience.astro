@@ -2,17 +2,24 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const ambiencePath = "/audio/apothecary-square-ambience.mp3";
-const ambienceFile = path.join(process.cwd(), "public", ambiencePath.slice(1));
-const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
+const stemSpecs = [
+  { name: "square", src: "/audio/hero/square-market.mp3", angle: 210, volume: 0.42 },
+  { name: "clock", src: "/audio/hero/shop-clock.mp3", angle: 145, volume: 0.2 },
+  { name: "wood", src: "/audio/hero/wood-creaks.mp3", angle: 230, volume: 0.22 },
+  { name: "shelves", src: "/audio/hero/shelf-glass.mp3", angle: 290, volume: 0.18 },
+];
+
+const availableStems = stemSpecs.filter((stem) =>
+  fs.existsSync(path.join(process.cwd(), "public", stem.src.slice(1))),
+);
 ---
 
 <button
   class="hero-ambience"
   type="button"
   data-hero-ambience
-  data-audio-src={hasElevenLabsAmbience ? ambiencePath : undefined}
-  aria-label="Start apothecary square ambience"
+  data-audio-stems={JSON.stringify(availableStems)}
+  aria-label="Start apothecary spatial ambience"
   aria-pressed="false"
 >
   <span class="hero-ambience-bars" aria-hidden="true">
@@ -28,92 +35,13 @@ const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
   controls.forEach((control) => {
     if (!(control instanceof HTMLButtonElement)) return;
 
-    const audioSrc = control.dataset.audioSrc;
-    let audio = null;
-    let audioFade = 0;
+    const stems = JSON.parse(control.dataset.audioStems || "[]");
     let context = null;
     let master = null;
-    let murmur = null;
-    let room = null;
-    let interval = 0;
+    let buffers = new Map();
+    let activeSources = [];
+    let currentYaw = 210;
     let isPlaying = false;
-
-    const makeNoiseBuffer = (audioContext, seconds) => {
-      const length = audioContext.sampleRate * seconds;
-      const buffer = audioContext.createBuffer(1, length, audioContext.sampleRate);
-      const data = buffer.getChannelData(0);
-      let last = 0;
-
-      for (let i = 0; i < length; i += 1) {
-        last = last * 0.92 + (Math.random() * 2 - 1) * 0.08;
-        data[i] = last;
-      }
-
-      return buffer;
-    };
-
-    const createSource = (audioContext, seconds, playbackRate = 1) => {
-      const source = audioContext.createBufferSource();
-      source.buffer = makeNoiseBuffer(audioContext, seconds);
-      source.loop = true;
-      source.playbackRate.value = playbackRate;
-      return source;
-    };
-
-    const pluckTone = (frequency, start, duration, volume, type = "sine") => {
-      if (!context || !master) return;
-
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      oscillator.type = type;
-      oscillator.frequency.setValueAtTime(frequency, start);
-      oscillator.frequency.exponentialRampToValueAtTime(frequency * 0.992, start + duration);
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(volume, start + 0.018);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      oscillator.connect(gain).connect(master);
-      oscillator.start(start);
-      oscillator.stop(start + duration + 0.04);
-    };
-
-    const footstep = (start) => {
-      if (!context || !master) return;
-
-      const source = context.createBufferSource();
-      const filter = context.createBiquadFilter();
-      const gain = context.createGain();
-
-      source.buffer = makeNoiseBuffer(context, 0.16);
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(150 + Math.random() * 80, start);
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.045 + Math.random() * 0.025, start + 0.018);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.14);
-      source.connect(filter).connect(gain).connect(master);
-      source.start(start);
-      source.stop(start + 0.18);
-    };
-
-    const doorCreak = (start) => {
-      if (!context || !master) return;
-
-      const source = context.createBufferSource();
-      const filter = context.createBiquadFilter();
-      const gain = context.createGain();
-
-      source.buffer = makeNoiseBuffer(context, 0.7);
-      source.playbackRate.value = 0.35;
-      filter.type = "bandpass";
-      filter.frequency.setValueAtTime(420, start);
-      filter.frequency.exponentialRampToValueAtTime(720, start + 0.55);
-      filter.Q.value = 10;
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.03, start + 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.62);
-      source.connect(filter).connect(gain).connect(master);
-      source.start(start);
-      source.stop(start + 0.7);
-    };
 
     const setActive = (active) => {
       isPlaying = active;
@@ -121,128 +49,106 @@ const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
       control.setAttribute("aria-pressed", active ? "true" : "false");
       control.setAttribute(
         "aria-label",
-        active ? "Stop apothecary square ambience" : "Start apothecary square ambience",
+        active ? "Stop apothecary spatial ambience" : "Start apothecary spatial ambience",
       );
     };
 
-    const fadeAudio = (target, afterFade) => {
-      if (!audio) return;
-
-      window.clearInterval(audioFade);
-      audioFade = window.setInterval(() => {
-        if (!audio) return;
-
-        const next = audio.volume + (target - audio.volume) * 0.18;
-        audio.volume = Math.max(0, Math.min(0.48, next));
-
-        if (Math.abs(audio.volume - target) < 0.015) {
-          audio.volume = target;
-          window.clearInterval(audioFade);
-          if (afterFade) afterFade();
-        }
-      }, 32);
+    const shortestAngle = (from, to) => {
+      const delta = ((to - from + 540) % 360) - 180;
+      return delta;
     };
 
-    const startGeneratedAudio = async () => {
-      if (!audioSrc) return false;
+    const updateStemPosition = (stem) => {
+      const delta = shortestAngle(currentYaw, stem.angle);
+      const radians = delta * Math.PI / 180;
+      const front = (Math.cos(radians) + 1) / 2;
+      const pan = Math.max(-1, Math.min(1, Math.sin(radians) * 0.92));
+      const volume = stem.baseVolume * (0.54 + front * 0.46);
 
-      if (!audio) {
-        audio = new Audio(audioSrc);
-        audio.loop = true;
-        audio.preload = "auto";
-        audio.volume = 0;
-      }
-
-      try {
-        await audio.play();
-        fadeAudio(0.42);
-        setActive(true);
-        return true;
-      } catch {
-        return false;
-      }
+      stem.panner.pan.setTargetAtTime(pan, context.currentTime, 0.08);
+      stem.gain.gain.setTargetAtTime(volume, context.currentTime, 0.12);
     };
 
-    const stopGeneratedAudio = () => {
-      if (!audio || audio.paused) return false;
-
-      fadeAudio(0, () => {
-        if (!audio) return;
-        audio.pause();
-      });
-      setActive(false);
-      return true;
+    const updateAllPositions = () => {
+      if (!context) return;
+      activeSources.forEach(updateStemPosition);
     };
 
-    const bell = (start) => {
-      pluckTone(522, start, 1.9, 0.025);
-      pluckTone(784, start + 0.025, 1.55, 0.014);
-      pluckTone(1046, start + 0.04, 1.05, 0.008);
+    const loadBuffers = async () => {
+      if (!context) return;
+
+      await Promise.all(stems.map(async (stem) => {
+        if (buffers.has(stem.src)) return;
+
+        const response = await fetch(stem.src);
+        const arrayBuffer = await response.arrayBuffer();
+        buffers.set(stem.src, await context.decodeAudioData(arrayBuffer));
+      }));
     };
 
-    const scheduleDetails = () => {
-      if (!context || !isPlaying) return;
+    const createStem = (stem, index) => {
+      const source = context.createBufferSource();
+      const gain = context.createGain();
+      const panner = context.createStereoPanner();
 
-      const now = context.currentTime;
-      const roll = Math.random();
+      source.buffer = buffers.get(stem.src);
+      source.loop = true;
+      gain.gain.value = 0.0001;
+      source.connect(gain).connect(panner).connect(master);
 
-      footstep(now + 0.08);
-      if (roll > 0.35) footstep(now + 0.42 + Math.random() * 0.34);
-      if (roll > 0.75) bell(now + 0.3 + Math.random() * 1.2);
-      if (roll < 0.18) doorCreak(now + 0.2 + Math.random() * 0.8);
+      const activeStem = {
+        ...stem,
+        source,
+        gain,
+        panner,
+        baseVolume: stem.volume,
+      };
+
+      updateStemPosition(activeStem);
+      source.start(context.currentTime + index * 0.08);
+      return activeStem;
     };
 
     const start = async () => {
-      if (await startGeneratedAudio()) return;
+      if (!stems.length) return;
 
       if (!context) {
         context = new AudioContext();
         master = context.createGain();
         master.gain.value = 0.0001;
         master.connect(context.destination);
-
-        const murmurFilter = context.createBiquadFilter();
-        const murmurGain = context.createGain();
-        const roomFilter = context.createBiquadFilter();
-        const roomGain = context.createGain();
-
-        murmur = createSource(context, 4, 0.58);
-        murmurFilter.type = "bandpass";
-        murmurFilter.frequency.value = 520;
-        murmurFilter.Q.value = 0.42;
-        murmurGain.gain.value = 0.025;
-        murmur.connect(murmurFilter).connect(murmurGain).connect(master);
-
-        room = createSource(context, 5, 0.22);
-        roomFilter.type = "lowpass";
-        roomFilter.frequency.value = 260;
-        roomGain.gain.value = 0.016;
-        room.connect(roomFilter).connect(roomGain).connect(master);
-
-        murmur.start();
-        room.start();
       }
 
       await context.resume();
+      await loadBuffers();
+
+      activeSources.forEach((stem) => stem.source.stop());
+      activeSources = stems.map(createStem);
+
       const now = context.currentTime;
       master.gain.cancelScheduledValues(now);
-      master.gain.setValueAtTime(master.gain.value, now);
-      master.gain.exponentialRampToValueAtTime(0.28, now + 1.2);
+      master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), now);
+      master.gain.exponentialRampToValueAtTime(0.86, now + 1.2);
       setActive(true);
-      scheduleDetails();
-      interval = window.setInterval(scheduleDetails, 1900);
     };
 
     const stop = () => {
-      if (stopGeneratedAudio()) return;
       if (!context || !master) return;
 
       const now = context.currentTime;
       master.gain.cancelScheduledValues(now);
       master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), now);
       master.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
-      window.clearInterval(interval);
+      window.setTimeout(() => {
+        activeSources.forEach((stem) => stem.source.stop());
+        activeSources = [];
+      }, 720);
       setActive(false);
+    };
+
+    const onView = (event) => {
+      currentYaw = event.detail?.yaw ?? currentYaw;
+      updateAllPositions();
     };
 
     control.addEventListener("click", () => {
@@ -253,10 +159,11 @@ const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
       }
     });
 
+    window.addEventListener("apothecary:view", onView);
+
     document.addEventListener("astro:before-swap", () => {
-      window.clearInterval(interval);
-      window.clearInterval(audioFade);
-      if (audio) audio.pause();
+      activeSources.forEach((stem) => stem.source.stop());
+      window.removeEventListener("apothecary:view", onView);
       if (context) void context.close();
     }, { once: true });
   });

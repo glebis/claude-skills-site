@@ -1,13 +1,13 @@
 <div
   class="hero-panorama"
   data-hero-panorama
-  data-texture="/images/apothecary-360-panorama.png"
+  data-texture="/images/apothecary-360-panorama.webp"
   aria-hidden="true"
 >
   <canvas class="hero-panorama-canvas" data-hero-panorama-canvas></canvas>
   <img
     class="hero-panorama-fallback"
-    src="/images/apothecary-360-panorama.png"
+    src="/images/apothecary-360-panorama.webp"
     alt=""
     loading="eager"
     decoding="async"
@@ -72,6 +72,7 @@
     let isDragging = false;
     let hasDragged = false;
     let lastInteraction = performance.now();
+    let lastViewEvent = 0;
     let frameId = 0;
 
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -163,6 +164,12 @@
       }
       aimCamera();
       renderer.render(scene, camera);
+      if (time - lastViewEvent > 80) {
+        lastViewEvent = time;
+        window.dispatchEvent(new CustomEvent("apothecary:view", {
+          detail: { yaw, pitch },
+        }));
+      }
       frameId = window.requestAnimationFrame(animate);
     };
 

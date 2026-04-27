@@ -23,48 +23,68 @@ await loadEnvFile(".env.local");
 await loadEnvFile(".env");
 
 const apiKey = process.env.ELEVENLABS_API_KEY || process.env.XI_API_KEY;
-const outputPath = process.argv[2] || "public/audio/apothecary-square-ambience.mp3";
+const outputDir = process.argv[2] || "public/audio/hero";
 const outputFormat = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_44100_128";
 const endpoint = new URL("https://api.elevenlabs.io/v1/sound-generation");
 
 endpoint.searchParams.set("output_format", outputFormat);
 
-const prompt = [
-  "A seamless thirty second ambient soundscape for an interactive medieval apothecary interior with open doors onto an old European town square.",
-  "Clear leather footsteps on stone paving should be audible every few seconds, with gentle market bustle and soft indistinct voices outside.",
-  "Add occasional wooden cart wheels, a far church bell, a wooden door creak, faint glass bottles and brass tools inside the shop.",
-  "Warm, natural, historically grounded, intimate, realistic field recording style. No music, no modern vehicles, no machinery, no readable speech, no sudden loud events, no white noise hiss.",
-].join(" ");
+const tracks = [
+  {
+    file: "square-market.mp3",
+    prompt: "Seamless 30s old European town square ambience outside an apothecary door. Soft indistinct human voices, market murmur, leather footsteps on stone, cart wheels on cobbles, distant church bell. Natural field recording, no music, no modern sounds, no clear words, no hiss.",
+    influence: 0.62,
+  },
+  {
+    file: "shop-clock.mp3",
+    prompt: "Seamless 30s interior medieval apothecary clock. Warm old mechanical clock ticking steadily with subtle wooden case resonance, very occasional tiny gear movement. Close indoor sound, intimate, no music, no voices, no hiss, no alarm.",
+    influence: 0.58,
+  },
+  {
+    file: "wood-creaks.mp3",
+    prompt: "Seamless 30s old apothecary wood ambience. Slow irregular wooden floorboard creaks, faint settling beams, quiet door hinge creak, warm room tone. Natural close indoor recording, sparse and believable, no footsteps, no music, no hiss.",
+    influence: 0.6,
+  },
+  {
+    file: "shelf-glass.mp3",
+    prompt: "Seamless 30s apothecary shelf details. Tiny glass bottles lightly clinking, brass tools shifting, mortar and pestle touches, subtle ceramic taps in a quiet wooden shop. Close realistic foley, sparse, no voices, no music, no hiss.",
+    influence: 0.6,
+  },
+];
 
 if (!apiKey) {
   console.error("Missing ELEVENLABS_API_KEY or XI_API_KEY. Set it in .env.local, .env, or the shell, then rerun this script.");
   process.exit(1);
 }
 
-const response = await fetch(endpoint, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "xi-api-key": apiKey,
-  },
-  body: JSON.stringify({
-    text: prompt,
-    loop: true,
-    duration_seconds: 30,
-    prompt_influence: 0.45,
-    model_id: "eleven_text_to_sound_v2",
-  }),
-});
+const absoluteOutputDir = path.resolve(outputDir);
 
-if (!response.ok) {
-  const message = await response.text();
-  throw new Error(`ElevenLabs request failed: ${response.status} ${response.statusText}\n${message}`);
+await fs.mkdir(absoluteOutputDir, { recursive: true });
+
+for (const track of tracks) {
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "xi-api-key": apiKey,
+    },
+    body: JSON.stringify({
+      text: track.prompt,
+      loop: true,
+      duration_seconds: 30,
+      prompt_influence: track.influence,
+      model_id: "eleven_text_to_sound_v2",
+    }),
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(`ElevenLabs request failed for ${track.file}: ${response.status} ${response.statusText}\n${message}`);
+  }
+
+  const audio = Buffer.from(await response.arrayBuffer());
+  const outputPath = path.join(absoluteOutputDir, track.file);
+
+  await fs.writeFile(outputPath, audio);
+  console.log(`Wrote ${path.relative(process.cwd(), outputPath)} (${Math.round(audio.length / 1024)} KB)`);
 }
-
-const audio = Buffer.from(await response.arrayBuffer());
-const absoluteOutputPath = path.resolve(outputPath);
-
-await fs.mkdir(path.dirname(absoluteOutputPath), { recursive: true });
-await fs.writeFile(absoluteOutputPath, audio);
-
-console.log(`Wrote ${outputPath} (${Math.round(audio.length / 1024)} KB)`);
