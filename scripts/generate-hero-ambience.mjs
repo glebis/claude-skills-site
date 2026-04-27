@@ -1,7 +1,28 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const apiKey = process.env.ELEVENLABS_API_KEY;
+const loadEnvFile = async (filePath) => {
+  try {
+    const env = await fs.readFile(filePath, "utf8");
+
+    for (const line of env.split(/\r?\n/)) {
+      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
+      if (!match) continue;
+
+      const [, key, rawValue] = match;
+      if (process.env[key]) continue;
+
+      process.env[key] = rawValue.replace(/^['"]|['"]$/g, "");
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+};
+
+await loadEnvFile(".env.local");
+await loadEnvFile(".env");
+
+const apiKey = process.env.ELEVENLABS_API_KEY || process.env.XI_API_KEY;
 const outputPath = process.argv[2] || "public/audio/apothecary-square-ambience.mp3";
 const outputFormat = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_44100_128";
 const endpoint = new URL("https://api.elevenlabs.io/v1/sound-generation");
@@ -9,13 +30,14 @@ const endpoint = new URL("https://api.elevenlabs.io/v1/sound-generation");
 endpoint.searchParams.set("output_format", outputFormat);
 
 const prompt = [
-  "A seamless thirty second ambient soundscape for an interactive medieval apothecary interior looking out onto an old European town square.",
-  "Distant market murmur, soft indistinct voices, leather shoes on stone, an occasional cart wheel, a far church bell, a wooden door creak, faint glass and brass objects in a quiet shop.",
-  "Warm, natural, historically grounded, intimate, not cinematic, no music, no modern vehicles, no readable speech, no sudden loud events.",
+  "A seamless thirty second ambient soundscape for an interactive medieval apothecary interior with open doors onto an old European town square.",
+  "Clear leather footsteps on stone paving should be audible every few seconds, with gentle market bustle and soft indistinct voices outside.",
+  "Add occasional wooden cart wheels, a far church bell, a wooden door creak, faint glass bottles and brass tools inside the shop.",
+  "Warm, natural, historically grounded, intimate, realistic field recording style. No music, no modern vehicles, no machinery, no readable speech, no sudden loud events, no white noise hiss.",
 ].join(" ");
 
 if (!apiKey) {
-  console.error("Missing ELEVENLABS_API_KEY. Set it in the environment, then rerun this script.");
+  console.error("Missing ELEVENLABS_API_KEY or XI_API_KEY. Set it in .env.local, .env, or the shell, then rerun this script.");
   process.exit(1);
 }
 

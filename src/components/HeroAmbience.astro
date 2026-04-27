@@ -210,13 +210,13 @@ const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
         murmurFilter.type = "bandpass";
         murmurFilter.frequency.value = 520;
         murmurFilter.Q.value = 0.42;
-        murmurGain.gain.value = 0.06;
+        murmurGain.gain.value = 0.025;
         murmur.connect(murmurFilter).connect(murmurGain).connect(master);
 
         room = createSource(context, 5, 0.22);
         roomFilter.type = "lowpass";
         roomFilter.frequency.value = 260;
-        roomGain.gain.value = 0.045;
+        roomGain.gain.value = 0.016;
         room.connect(roomFilter).connect(roomGain).connect(master);
 
         murmur.start();
@@ -227,7 +227,7 @@ const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
       const now = context.currentTime;
       master.gain.cancelScheduledValues(now);
       master.gain.setValueAtTime(master.gain.value, now);
-      master.gain.exponentialRampToValueAtTime(0.42, now + 1.2);
+      master.gain.exponentialRampToValueAtTime(0.28, now + 1.2);
       setActive(true);
       scheduleDetails();
       interval = window.setInterval(scheduleDetails, 1900);
