@@ -1,12 +1,12 @@
 ---
 name: "agency-docs-updater"
-tagline: "One command to publish a lab meeting — transcript to YouTube to docs site."
+tagline: "A demo workflow that uses other skills to turn a live event into updated docs."
 apothecary_name: "The Publisher's Engine"
 bundle: lab-consulting
 tags: ["publishing","youtube","docs","pipeline"]
 accent_color: amber
 hero_image: "/images/agency-docs-updater-hero.jpg"
-auto_description: "End-to-end pipeline for publishing Claude Code lab meetings. Accepts optional args: date (YYYYMMDD, \"yesterday\", \"today\") and lab number (e.g. \"04\"). Examples: \"yesterday 04\", \"20260420 05\", \"04\" (today, lab 04), \"\" (today, auto-detect lab)."
+auto_description: "Demo skill showing a real multi-skill workflow for updating documentation after a live event: transcript and recording intake, fact-checking, translation, glossary updates, database/docs updates, YouTube publishing, and deployment. Accepts optional args: date (YYYYMMDD, \"yesterday\", \"today\") and lab number (e.g. \"04\")."
 auto_triggers: []
 auto_tools: []
 auto_last_synced: "2026-04-23"
@@ -19,15 +19,20 @@ dependencies: []
 
 ## What it does
 
-A fully automated publishing pipeline that takes a Claude Code lab meeting from raw recording to published content in a single command. It chains together transcript fetching, video downloading, YouTube uploading, thumbnail generation, and docs site deployment.
+This is a demo skill for a real composed workflow: after a live Claude Code lab event, it coordinates other skills and tools to update the documentation database and publish the event archive. It is less a single-purpose utility than an example of how skills can be chained into an operational process.
+
+The workflow starts from the event recording and transcript, then updates the docs source of truth with checked facts, translated material, glossary changes, event notes, and publication metadata. It also handles the surrounding publishing work: video download, YouTube upload, thumbnail generation, docs site updates, commits, and deployment.
 
 ## Key features
 
-- **Transcript-first workflow** — starts from Fathom or Zoom transcripts, auto-detects language (Russian or English)
+- **Composed demo workflow** — shows how one skill can rely on other specialized skills to execute an end-to-end post-event process
+- **Transcript-first intake** — starts from Fathom or Zoom transcripts, auto-detects language (Russian or English), and prepares event notes
+- **Documentation database updates** — updates the docs source with summaries, structured metadata, glossary additions, translated material, and corrections
+- **Quality pass** — includes fact-checking, translation review, and terminology cleanup before publishing
 - **Video pipeline** — downloads from Zoom (primary) or Fathom (fallback), uploads to YouTube with generated metadata and branded thumbnails
 - **Docs site integration** — generates MDX content, commits to the agency-docs repo, and triggers deployment
 - **Smart defaults** — auto-detects today's date and lab number; accepts overrides like `yesterday 04` or `20260420 05`
 
 ## When to use
 
-After finishing a Claude Code lab session, when you want to publish the recording, transcript, and notes to your docs site and YouTube channel without doing each step manually.
+Use it as a reference demo for a real automation that happens after a live event: update the documentation database, reconcile transcript facts, translate and normalize terms, refresh glossary entries, and publish the recording and notes without doing each step manually.
