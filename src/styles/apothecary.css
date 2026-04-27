@@ -255,7 +255,9 @@ h3 {
 
 /* ── CTA cards (Browse/GitHub buttons) ── */
 .cta-card {
+  position: relative;
   display: inline-block;
+  overflow: hidden;
   background: var(--bg-surface);
   border: 1px solid var(--rule);
   border-radius: 5px;
@@ -263,11 +265,21 @@ h3 {
   font-variant: small-caps;
   font-size: 1rem;
   letter-spacing: 0.04em;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.2s ease;
+  transform: translateY(0);
+  transition:
+    border-color 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.24s ease,
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.34s ease;
 }
 .cta-card:hover {
   border-color: var(--rule-hover);
   box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+.cta-card:active {
+  transform: translateY(0);
 }
 .cta-primary {
   color: var(--accent);
@@ -1022,13 +1034,38 @@ footer a:hover {
   box-shadow: 0 0.8rem 2.4rem oklch(8% 0.02 74 / 0.28);
   backdrop-filter: blur(10px);
   cursor: pointer;
-  transition: background 0.24s ease, border-color 0.24s ease, transform 0.24s ease;
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-ambience::before {
+  content: "";
+  position: absolute;
+  inset: -0.45rem;
+  border: 1px solid oklch(68% 0.1 72 / 0.42);
+  border-radius: inherit;
+  opacity: 0;
+  transform: scale(0.74);
+  transition: opacity 0.34s ease, transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .hero-ambience:hover,
 .hero-ambience:focus-visible {
   border-color: oklch(68% 0.1 72 / 0.85);
   background: oklch(18% 0.035 70 / 0.82);
-  transform: translateY(-1px);
+  box-shadow:
+    0 1rem 2.7rem oklch(8% 0.02 74 / 0.34),
+    0 0 1.2rem oklch(64% 0.12 62 / 0.22);
+  transform: translateY(-2px) scale(1.04);
+}
+.hero-ambience:hover::before,
+.hero-ambience:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.hero-ambience:active {
+  transform: translateY(0) scale(0.98);
 }
 .hero-ambience-bars {
   width: 1.15rem;
@@ -1069,6 +1106,17 @@ footer a:hover {
     opacity: 1;
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .cta-card,
+  .home-hero .cta-card::before,
+  .home-hero .cta-card::after,
+  .hero-ambience,
+  .hero-ambience::before,
+  .hero-ambience-bars span {
+    animation: none;
+    transition-duration: 0.01ms;
+  }
+}
 .hero-kicker {
   font-family: "Monaspace Argon", monospace;
   color: color-mix(in oklch, var(--accent) 80%, oklch(92% 0.03 82));
@@ -1104,7 +1152,63 @@ footer a:hover {
   background: oklch(18% 0.03 72 / 0.78);
   color: oklch(88% 0.04 82);
   border-color: oklch(50% 0.08 64 / 0.7);
+  box-shadow:
+    inset 0 0 0 1px oklch(78% 0.07 72 / 0.06),
+    0 0.75rem 2rem oklch(8% 0.02 74 / 0.22);
   backdrop-filter: blur(8px);
+}
+.home-hero .cta-card::before,
+.home-hero .cta-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.home-hero .cta-card::before {
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0 28%, oklch(82% 0.1 78 / 0.18) 43%, transparent 58%),
+    radial-gradient(circle at var(--spark-x, 18%) 0%, oklch(78% 0.11 72 / 0.22), transparent 34%);
+  opacity: 0;
+  transform: translateX(-36%);
+  transition: opacity 0.28s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-hero .cta-card::after {
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.45rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(74% 0.11 72 / 0.72), transparent);
+  opacity: 0;
+  transform: scaleX(0.2);
+  transform-origin: 50% 50%;
+  transition: opacity 0.34s ease, transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-hero .cta-card:hover,
+.home-hero .cta-card:focus-visible {
+  background: oklch(22% 0.04 72 / 0.86);
+  border-color: oklch(70% 0.11 72 / 0.9);
+  box-shadow:
+    inset 0 0 0 1px oklch(82% 0.08 76 / 0.16),
+    0 0.8rem 2.2rem oklch(8% 0.02 74 / 0.34),
+    0 0 1.4rem oklch(64% 0.12 62 / 0.22);
+}
+.home-hero .cta-card:hover::before,
+.home-hero .cta-card:focus-visible::before {
+  opacity: 1;
+  transform: translateX(42%);
+}
+.home-hero .cta-card:hover::after,
+.home-hero .cta-card:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.home-hero .cta-primary:hover,
+.home-hero .cta-primary:focus-visible {
+  color: oklch(94% 0.05 82);
+}
+.home-hero .cta-secondary:hover,
+.home-hero .cta-secondary:focus-visible {
+  color: oklch(88% 0.04 82);
 }
 .specimen-band {
   display: grid;
