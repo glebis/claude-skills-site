@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "generate:ambience": "node scripts/generate-hero-ambience.mjs",
     "sync-skills": "tsx src/scripts/sync-from-github.ts --local ../claude-skills"
   },
   "dependencies": {

@@ -1,7 +1,17 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+const ambiencePath = "/audio/apothecary-square-ambience.mp3";
+const ambienceFile = path.join(process.cwd(), "public", ambiencePath.slice(1));
+const hasElevenLabsAmbience = fs.existsSync(ambienceFile);
+---
+
 <button
   class="hero-ambience"
   type="button"
   data-hero-ambience
+  data-audio-src={hasElevenLabsAmbience ? ambiencePath : undefined}
   aria-label="Start apothecary square ambience"
   aria-pressed="false"
 >
@@ -18,6 +28,9 @@
   controls.forEach((control) => {
     if (!(control instanceof HTMLButtonElement)) return;
 
+    const audioSrc = control.dataset.audioSrc;
+    let audio = null;
+    let audioFade = 0;
     let context = null;
     let master = null;
     let murmur = null;
@@ -102,6 +115,65 @@
       source.stop(start + 0.7);
     };
 
+    const setActive = (active) => {
+      isPlaying = active;
+      control.classList.toggle("is-playing", active);
+      control.setAttribute("aria-pressed", active ? "true" : "false");
+      control.setAttribute(
+        "aria-label",
+        active ? "Stop apothecary square ambience" : "Start apothecary square ambience",
+      );
+    };
+
+    const fadeAudio = (target, afterFade) => {
+      if (!audio) return;
+
+      window.clearInterval(audioFade);
+      audioFade = window.setInterval(() => {
+        if (!audio) return;
+
+        const next = audio.volume + (target - audio.volume) * 0.18;
+        audio.volume = Math.max(0, Math.min(0.48, next));
+
+        if (Math.abs(audio.volume - target) < 0.015) {
+          audio.volume = target;
+          window.clearInterval(audioFade);
+          if (afterFade) afterFade();
+        }
+      }, 32);
+    };
+
+    const startGeneratedAudio = async () => {
+      if (!audioSrc) return false;
+
+      if (!audio) {
+        audio = new Audio(audioSrc);
+        audio.loop = true;
+        audio.preload = "auto";
+        audio.volume = 0;
+      }
+
+      try {
+        await audio.play();
+        fadeAudio(0.42);
+        setActive(true);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    const stopGeneratedAudio = () => {
+      if (!audio || audio.paused) return false;
+
+      fadeAudio(0, () => {
+        if (!audio) return;
+        audio.pause();
+      });
+      setActive(false);
+      return true;
+    };
+
     const bell = (start) => {
       pluckTone(522, start, 1.9, 0.025);
       pluckTone(784, start + 0.025, 1.55, 0.014);
@@ -121,6 +193,8 @@
     };
 
     const start = async () => {
+      if (await startGeneratedAudio()) return;
+
       if (!context) {
         context = new AudioContext();
         master = context.createGain();
@@ -154,15 +228,13 @@
       master.gain.cancelScheduledValues(now);
       master.gain.setValueAtTime(master.gain.value, now);
       master.gain.exponentialRampToValueAtTime(0.42, now + 1.2);
-      isPlaying = true;
-      control.classList.add("is-playing");
-      control.setAttribute("aria-pressed", "true");
-      control.setAttribute("aria-label", "Stop apothecary square ambience");
+      setActive(true);
       scheduleDetails();
       interval = window.setInterval(scheduleDetails, 1900);
     };
 
     const stop = () => {
+      if (stopGeneratedAudio()) return;
       if (!context || !master) return;
 
       const now = context.currentTime;
@@ -170,10 +242,7 @@
       master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), now);
       master.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
       window.clearInterval(interval);
-      isPlaying = false;
-      control.classList.remove("is-playing");
-      control.setAttribute("aria-pressed", "false");
-      control.setAttribute("aria-label", "Start apothecary square ambience");
+      setActive(false);
     };
 
     control.addEventListener("click", () => {
@@ -186,6 +255,8 @@
 
     document.addEventListener("astro:before-swap", () => {
       window.clearInterval(interval);
+      window.clearInterval(audioFade);
+      if (audio) audio.pause();
       if (context) void context.close();
     }, { once: true });
   });
