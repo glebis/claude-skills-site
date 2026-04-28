@@ -1,0 +1,35 @@
+---
+name: "automation-advisor"
+tagline: "Quantified ROI analysis for automation decisions with voice-enabled web interface."
+apothecary_name: "The Clockmaker's Ledger"
+bundle: thinking-strategy
+tags: ["automation","decision","roi","voice","web"]
+accent_color: amber
+# hero_image:
+auto_description: "Interactive automation decision advisor using the Automation Decision Matrix framework"
+auto_triggers: ["should I automate", "automation ROI"]
+auto_tools: []
+auto_last_synced: "2026-04-28"
+auto_last_commit: "2026-01-25"
+auto_activity: []
+install_command: ""
+repo_path: "automation-advisor"
+dependencies: ["flask", "groq", "python-dotenv"]
+---
+
+## What it does
+
+Guides you through a structured 8-phase decision framework to evaluate whether a task is worth automating. Scores four dimensions (frequency, time, error cost, longevity), applies seven override checks for high-stakes scenarios, calculates break-even ROI, and generates an Obsidian-formatted analysis report. Available as a Claude Code skill, console app, or voice-enabled web interface.
+
+## Key features
+
+- **4-dimension scoring matrix** — frequency × time × error cost × longevity produces a quantified automation score with clear decision thresholds (automate now / maybe / stay manual)
+- **7 override checks** — catches edge cases where high scores still shouldn't be automated: regulated industries, creative work, rapidly changing requirements, learning fundamentals
+- **Validation patterns** — for high-stakes automation, recommends human-in-the-loop, confidence thresholds, audit trails, or staged rollout approaches
+- **Break-even calculator** — estimates build time investment, weekly time saved, and weeks to ROI
+- **Voice interface** — Groq Whisper STT input and browser Web Speech API output for hands-free evaluation
+- **Web UI** — dark-theme responsive interface with real-time progress tracking and multi-user sessions
+
+## When to use
+
+When deciding whether to automate a repetitive task — transforms "this feels tedious" into a quantified recommendation with clear next steps and risk assessment.
