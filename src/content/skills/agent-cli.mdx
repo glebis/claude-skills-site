@@ -1,0 +1,35 @@
+---
+name: "agent-cli"
+tagline: "Make any Python CLI script agent-friendly with structured JSON output."
+apothecary_name: "The Translator's Tincture"
+bundle: developer-tools
+tags: ["cli","json","automation","python","agents"]
+accent_color: cyan
+# hero_image:
+auto_description: "Add agent-friendly --json NDJSON output to Python CLI scripts, or scaffold a complete cli_utils package for a project."
+auto_triggers: ["add --json", "make this agent-friendly", "structured CLI output"]
+auto_tools: []
+auto_last_synced: "2026-04-30"
+auto_last_commit: "2026-04-30"
+auto_activity: []
+install_command: ""
+repo_path: "agent-cli"
+dependencies: []
+---
+
+## What it does
+
+Converts Python CLI scripts from human-only `print()` output to agent-consumable NDJSON with a single `--json` flag. Provides a complete `cli_utils.py` reference implementation with helpers for structured logging, error reporting, and daemon readiness signals. Can also scaffold a full open-source package with pyproject.toml, tests, MIT license, and GitHub Actions CI.
+
+## Key features
+
+- **Two modes** — Convert an existing script in-place (Mode A) or scaffold a complete pip-installable package (Mode B)
+- **NDJSON event envelope** — Every JSON line has `event` + `ts` fields, processable with grep/jq, resilient to corruption
+- **Daemon readiness protocol** — `json_ready()` emits `{"event": "ready", "pid": N, "port": N}` as the first line so orchestrators know when to proceed
+- **`die()` helper** — Collapses the common 4-line error-exit pattern into a single call that respects JSON or human mode
+- **Output point scanner** — grep-based categorization of all print/sys.exit/input calls before modifying anything
+- **Verification checklist** — Built-in checklist catches leaked prints, missing guards on side effects, and unhandled exceptions
+
+## When to use
+
+When you want to make Python CLI scripts machine-readable for AI agents, add `--json` flags to existing tools, convert print statements to structured output, or create an open-source CLI helper library with full test coverage.
