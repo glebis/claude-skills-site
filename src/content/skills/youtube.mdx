@@ -1,0 +1,35 @@
+---
+name: "youtube"
+tagline: "Manage YouTube videos, playlists, thumbnails, and comments from the terminal."
+apothecary_name: "The Broadcaster's Console"
+bundle: content-publishing
+tags: [youtube, video, api, playlists, comments, metadata]
+accent_color: orange
+# hero_image:
+auto_description: "Manage YouTube videos, playlists, thumbnails, and comments via YouTube Data API v3. Use when the user wants to list, update, delete, or interact with YouTube content."
+auto_triggers: ["update video description", "list my videos", "manage playlists"]
+auto_tools: []
+auto_last_synced: "2026-05-01"
+auto_last_commit: "2026-05-01"
+auto_activity: []
+install_command: ""
+repo_path: "youtube"
+dependencies: [google-api-python-client, google-auth-oauthlib]
+---
+
+## What it does
+
+Full YouTube channel management through a JSON CLI wrapping the YouTube Data API v3. List and search videos, update metadata with safe merge-on-update semantics, manage playlists and their items, moderate comments, and set custom thumbnails — all from natural language in Claude Code.
+
+## Key features
+
+- **Safe partial updates** — fetches existing snippet before updating, so changing a title never wipes the description
+- **Quota-aware listing** — `--mine` uses the uploads playlist path (~3 quota) instead of expensive search.list (~100 quota)
+- **Full comment management** — list threads with inline replies, post top-level comments, reply, delete, and set moderation status
+- **Playlist orchestration** — create, populate, reorder, and manage playlist items with distinct item ID handling
+- **Stdin piping** — pass long descriptions or comment text via stdin for multiline content like timecodes
+- **Destructive safety** — all delete operations require an explicit `--yes` flag
+
+## When to use
+
+When you need to manage YouTube content — updating video descriptions with timecodes, organizing videos into playlists, moderating comments, or setting thumbnails after upload.
