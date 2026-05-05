@@ -1,0 +1,35 @@
+---
+name: "session-anonymizer"
+tagline: "Three-layer PII shield for session transcripts — fully local, nothing leaves your machine."
+apothecary_name: "The Redactor's Veil"
+bundle: thinking-strategy
+tags: [privacy, anonymization, pii, therapy, coaching, russian-nlp]
+accent_color: violet
+# hero_image:
+auto_description: "Three-layer PII anonymization for session transcripts (therapy, coaching, consulting, mentoring). Runs Natasha (Russian NER), OpenAI Privacy Filter, and local LLM (Ollama) in sequence for maximum coverage. Fully local by default."
+auto_triggers: ["anonymize", "redact PII", "anonymize session"]
+auto_tools: []
+auto_last_synced: "2026-05-05"
+auto_last_commit: "2026-05-05"
+auto_activity: []
+install_command: ""
+repo_path: "session-anonymizer"
+dependencies: ["natasha", "opf (OpenAI Privacy Filter)", "ollama", "qwen2.5:3b"]
+---
+
+## What it does
+
+Strips personally identifiable information from session transcripts using three detection layers in sequence: Natasha for Russian names, locations, and organizations; OpenAI Privacy Filter for phones, accounts, and addresses; and a local LLM via Ollama for medications, dates, and contextual identifiers. Every layer runs on-device — no data leaves the machine unless you explicitly opt into cloud verification on already-anonymized text.
+
+## Key features
+
+- **Three-layer coverage** — Each layer catches what others miss. Tested at 8/8 entity detection on Russian therapy text when all layers active.
+- **Medication-aware** — Explicitly detects drug names with dosages as PII, since they narrow identity in clinical contexts.
+- **Russian + English** — Natasha is native Russian NER; OPF handles English; the LLM layer handles both languages and morphological variants.
+- **Batch processing** — Anonymize an entire folder of transcripts with consistent pseudonyms across files.
+- **AES-256 encryption** — Optional encryption of output files for data-at-rest protection.
+- **Graceful degradation** — Each layer is optional. Missing Ollama? Runs with Natasha + OPF. Missing OPF? Runs with Natasha + LLM. Warns about what's missing.
+
+## When to use
+
+When preparing session transcripts (therapy, coaching, mentoring, consulting) for AI analysis — pipe them through the anonymizer before sending to Claude, ChatGPT, or any other tool. Also useful for supervision preparation, research datasets, and regulatory compliance with 152-FZ, GDPR, or HIPAA.
