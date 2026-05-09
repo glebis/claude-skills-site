@@ -1,0 +1,35 @@
+---
+name: "wispr-fix"
+tagline: "Queue dictation corrections on the fly, batch-apply when ready."
+apothecary_name: "The Corrector's Queue"
+bundle: personal-analytics
+tags: ["voice", "dictation", "wispr-flow", "dictionary", "queue"]
+accent_color: amber
+# hero_image:
+auto_description: "Queue and batch-apply Wispr Flow dictation corrections. Use when the user invokes /wispr-fix or writes 'wispr fix: X -> Y' to correct a speech-to-text mishear."
+auto_triggers: ["/wispr-fix", "wispr fix:"]
+auto_tools: []
+auto_last_synced: "2026-05-09"
+auto_last_commit: "2026-05-09"
+auto_activity: []
+install_command: ""
+repo_path: "wispr-fix"
+dependencies: ["jq", "sqlite3"]
+---
+
+## What it does
+
+Queues Wispr Flow dictation corrections instantly during work and batch-applies them when convenient. Eliminates the disruptive quit-fix-restart cycle by decoupling "notice the mishear" from "fix the dictionary."
+
+## Key features
+
+- **Zero-interruption queuing** — Corrections queue instantly with no Wispr restart needed
+- **Auto-detect pattern** — Type `wispr fix: X -> Y` anywhere in conversation to queue a correction
+- **Transactional flush** — Quits Wispr, backs up DB, applies all corrections atomically, verifies integrity, restarts
+- **Smart case variants** — Auto-generates lowercase and title case variants for multi-word phrases
+- **Conflict detection** — Flags existing entries with different replacements for manual review
+- **Voice feedback** — Announces Wispr shutdown and restart via macOS `say`
+
+## When to use
+
+When you notice a dictation mishear and want to fix it without breaking your flow. Queue corrections throughout a session, then flush them all at once when you're ready for Wispr to restart.

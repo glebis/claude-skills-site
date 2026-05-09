@@ -3,14 +3,14 @@ name: "wispr-analytics"
 tagline: "Analyze voice dictation patterns for work habits and sentiment."
 apothecary_name: "The Voice Mirror"
 bundle: personal-analytics
-tags: ["voice","dictation","analytics"]
+tags: ["voice", "dictation", "analytics", "wispr-flow", "dictionary"]
 accent_color: amber
 # hero_image:
-auto_description: "This skill should be used when analyzing Wispr Flow voice dictation history for self-reflection, work patterns, mental health insights, or productivity analytics. Triggered by requests like \"/wispr-analytics\", \"analyze my dictations\", \"what did I dictate today\", \"wispr reflection\", or any request to review voice dictation patterns. Supports modes - technical (coding/work), soft (communication), trends (volume/frequency), mental (sentiment/energy/rumination)."
-auto_triggers: []
+auto_description: "Analyze Wispr Flow voice dictation history for self-reflection, work patterns, mental health insights, or productivity analytics. Also manages the Wispr Flow dictionary — adding terms, fixing mishears, exporting/importing, suggesting improvements."
+auto_triggers: ["/wispr-analytics", "analyze my dictations", "wispr suggest"]
 auto_tools: []
-auto_last_synced: "2026-04-23"
-auto_last_commit: "2026-02-24"
+auto_last_synced: "2026-05-09"
+auto_last_commit: "2026-05-09"
 auto_activity: [0,0,0,3,0,0,0,0,0,0,0,0]
 install_command: ""
 repo_path: "wispr-analytics"
@@ -19,15 +19,17 @@ dependencies: []
 
 ## What it does
 
-Analyzes your Wispr Flow voice dictation history to surface work patterns, communication habits, energy levels, and mental health signals. Turns raw dictation data into actionable self-reflection.
+Analyzes your Wispr Flow voice dictation history to surface work patterns, communication habits, energy levels, and mental health signals. Also manages the Wispr Flow dictionary — adding recognition terms, fixing recurring mishears, and suggesting improvements based on ASR vs formatted text divergence.
 
-## Analysis modes
+## Key features
 
-- **Technical** — coding and work patterns: what technologies you're dictating about, project focus areas, technical problem clusters
-- **Soft** — communication patterns: tone, formality shifts, who you're writing to most
-- **Trends** — volume and frequency: dictation count over time, peak hours, daily/weekly rhythms
-- **Mental** — sentiment analysis, energy levels, rumination detection, emotional patterns
+- **Four analysis modes** — Technical (coding focus), Soft (communication), Trends (volume/frequency), Mental (sentiment/energy)
+- **Bilingual support** — Handles Russian/English code-switching naturally
+- **Comparison dashboards** — Chart.js visual comparisons between periods with hourly activity heatmaps
+- **Dictionary management** — Export, import, add, remove, and suggest dictionary corrections
+- **Proactive suggestions** — Detects recurring ASR mismatches and recommends dictionary entries
+- **Auto-restart** — Restarts Wispr Flow after dictionary import operations
 
 ## When to use
 
-For periodic self-reflection on your work habits, when you want to understand your energy patterns across the day, or when you're curious about what you've been focused on. Works especially well as a weekly or monthly review tool.
+When you want periodic self-reflection on work habits, energy patterns, or communication style. Also when managing Wispr Flow's dictionary — adding terms, fixing mishears, or analyzing dictation quality.
