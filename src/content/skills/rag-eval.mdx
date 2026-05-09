@@ -1,0 +1,35 @@
+---
+name: "rag-eval"
+tagline: "Replace eyeballing with structured RAG sweeps that track cost and quality."
+apothecary_name: "The Assayer's Scale"
+bundle: developer-tools
+tags: [rag, evals, retrieval, embeddings, cost-tracking, llm-optimization]
+accent_color: amber
+# hero_image:
+auto_description: "Iterate on RAG systems with structured evals instead of eyeballing. Runs cost-aware sweep grids, ranks variants, and returns structured feedback on architecture, stack, and likely issues."
+auto_triggers: ["help me test a RAG", "tune my RAG", "my RAG eval is expensive"]
+auto_tools: []
+auto_last_synced: "2026-05-09"
+auto_last_commit: "2026-05-09"
+auto_activity: []
+install_command: ""
+repo_path: "rag-eval"
+dependencies: ["dspy", "openrouter or openai API key"]
+---
+
+## What it does
+
+Replaces the "tweak, squint, swap model, burn credits" loop with a structured eval pipeline. Runs a grid of retrieval variants against a human-labeled gold set, ranks them by a cost-aware score, and returns concrete next experiments. Learns from prior runs so you never re-test a rejected variant.
+
+## Key features
+
+- **Cost-aware scoring** — Ranks variants by `quality x (1 / log(1 + cost))`, so cheap-and-good beats expensive-and-slightly-better.
+- **Session ingest** — Extracts signals from prior Claude Code transcripts or Fathom meetings without pasting 100k tokens of noise.
+- **Stack audit** — Inspects your repo, vector store, and chunking strategy against an evidence-based checklist before proposing experiments.
+- **Budget guardrails** — Hard dollar cap per sweep. Halts mid-run if budget is reached. Always confirms cost estimate before executing.
+- **Iterative memory** — Reads `history.jsonl` across runs to surface patterns and avoid re-testing dead ends.
+- **Gold set bootstrapping** — If you don't have labeled data, generates a starter set from your corpus for human review.
+
+## When to use
+
+When you're tuning a RAG pipeline and want structured experiments instead of gut-feel adjustments. Also when eval costs are climbing with no clear signal of improvement.
