@@ -1,0 +1,35 @@
+---
+name: "disk-cleanup"
+tagline: "Survey and clean macOS caches to reclaim disk space safely."
+apothecary_name: "The Sweeper's Broom"
+bundle: developer-tools
+tags: ["macos", "cache", "disk-space", "cleanup", "maintenance"]
+accent_color: green
+# hero_image:
+auto_description: "Scan and clean macOS system caches, package manager caches, and app data to reclaim disk space. Surveys ~/Library/Caches, ~/.cache, Docker, npm/pip/uv/pnpm, Homebrew, browser caches, app updater caches, Claude Desktop, Xcode DerivedData, Playwright browsers, system logs, and ML model caches."
+auto_triggers: ["clean up my Mac", "what's eating my disk space", "free up space"]
+auto_tools: []
+auto_last_synced: "2026-05-29"
+auto_last_commit: "2026-05-29"
+auto_activity: []
+install_command: ""
+repo_path: "skills/disk-cleanup"
+dependencies: ["trash-cli"]
+---
+
+## What it does
+
+Surveys every major cache location on macOS — system caches, package managers, browser data, Docker images, app updater artifacts, ML model stores — and presents a size-sorted inventory table. Then cleans selected items using `trash` (never `rm`), so everything is recoverable from Trash until you explicitly empty it.
+
+## Key features
+
+- **Four preset levels** — `safe` (caches, logs, updaters), `docker` (adds Docker prune), `full` (adds ML models), or `pick` (choose item by item)
+- **Discovery sweep** — catches unlisted caches over 100 MB that aren't in the hardcoded list, so the skill stays useful as you install new tools
+- **Safe by default** — uses macOS `trash` command, never `rm`. Files go to Trash first
+- **Dry-run mode** — survey and report sizes without deleting anything
+- **Before/after report** — shows disk usage change and warns about Trash needing to be emptied
+- **Skip list** — exclude specific locations (e.g., `skip: docker, huggingface`) when you need those caches intact
+
+## When to use
+
+When running low on macOS disk space, getting "disk almost full" warnings, or wanting to audit what's consuming storage across system caches, package managers, and app data.
