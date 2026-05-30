@@ -1,0 +1,35 @@
+---
+name: "meeting-prep"
+tagline: "Research participants and create Obsidian prep notes from Cal.com bookings."
+apothecary_name: "The Dossier Desk"
+bundle: meeting-intelligence
+tags: [cal-com, obsidian, participant-research, session-prep, dataview, workflow]
+accent_color: amber
+# hero_image:
+auto_description: "Prepare for upcoming meetings — pulls Cal.com bookings, researches participants, audits previous sessions from Obsidian vault, and creates prep notes. Also links prep notes to post-meeting session notes."
+auto_triggers: ["prep for my meetings", "who do I have coming up", "meeting prep"]
+auto_tools: []
+auto_last_synced: "2026-05-30"
+auto_last_commit: "2026-05-30"
+auto_activity: []
+install_command: ""
+repo_path: "meeting-prep"
+dependencies: [cal-com-mcp]
+---
+
+## What it does
+
+Pulls upcoming bookings from Cal.com, researches each participant via web search and Obsidian vault history, then creates structured prep notes with session continuity, outstanding action items, and conversation starters. After the meeting, it auto-links prep notes to session transcripts from Fathom or Granola.
+
+## Key features
+
+- **Cal.com integration** — fetches bookings with full attendee lists, handles solo and group sessions, syncs cancellations and reschedules.
+- **Adversarial research verification** — a second agent cross-checks web research claims against email domains and flags low-confidence findings before they reach the prep note.
+- **Session continuity** — surfaces outstanding action items, recurring themes, and progress across all previous meetings with each participant.
+- **Sequential awareness** — when the same participant has multiple upcoming sessions, later prep notes reference earlier ones and flag sections that will become stale.
+- **Auto-linking** — meeting-processor automatically connects prep notes to session transcripts after the call, no manual step needed.
+- **Dataview queries** — ships ready-to-paste queries for meeting frequency, participant timelines, prep coverage gaps, and first-timer follow-ups.
+
+## When to use
+
+When you want to walk into a meeting fully briefed — knowing who the person is, what you discussed last time, and what to follow up on — without manually digging through your vault.
