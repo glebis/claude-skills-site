@@ -1,0 +1,36 @@
+---
+name: "synthetic-session-generator"
+tagline: "Generate persona-consistent synthetic coaching & therapy transcripts."
+apothecary_name: "The Mimic's Couch"
+bundle: lab-consulting
+tags: ["synthetic-data","coaching","therapy","evals","personas"]
+accent_color: violet
+# hero_image:
+auto_description: "This skill should be used to generate realistic, persona-consistent synthetic coaching and therapy session transcripts for evals, demos, and training data."
+auto_triggers: ["generate a synthetic coaching session","make fake therapy transcripts for evals","test data for my session summarizer"]
+auto_tools: []
+auto_last_synced: "2026-05-30"
+auto_last_commit: "2026-05-30"
+auto_activity: []
+install_command: ""
+repo_path: "synthetic-session-generator"
+dependencies: []
+---
+
+## What it does
+
+Produces fictional but believable coaching and therapy session transcripts that read like real recorded sessions, while staying clearly watermarked as synthetic. Each session is grounded in a chosen modality (ICF/GROW coaching, CBT, IFS parts-work, or ACT/Motivational Interviewing) and a reusable persona, then rendered to Fathom/Granola transcript style, plain dialogue, structured JSON with eval labels, or Obsidian markdown.
+
+## Key features
+
+- **Modality fidelity** — four frameworks with technique cheat-sheets so the practitioner's questions, pacing, and arc match the chosen approach
+- **Persona bible** — reusable personas (Maya, Diego, Priya) keep a client in voice across a session series; invent-and-persist new ones
+- **Eval-ready output** — a `ground_truth` block (themes, action items, distortions, techniques) makes transcripts labelled test data for summarizers and analyzers
+- **Timestamp emulation** — timing is computed from turn length (~150 wpm), never hand-faked
+- **Setup mode** — persist defaults for language (8 languages), modality, and session duration
+- **Case card + visuals** — a modality-aware conceptualization card with an illustrative portrait via `gpt-image-2`, renderable as a Tufte-style HTML page via `tufte-report`
+- **Always synthetic** — every artifact is watermarked; personas are composites, never real people, and portraits stay illustrative
+
+## When to use
+
+When you need fake-but-realistic coaching or therapy transcripts — to build labelled eval datasets, run product demos without exposing real client data, or create few-shot examples — rather than analyzing a real session (that belongs to `coaching-session-summarizer`).
