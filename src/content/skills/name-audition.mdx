@@ -1,0 +1,35 @@
+---
+name: "name-audition"
+tagline: "Audition candidate names with domain, collision, and trademark checks."
+apothecary_name: "The Christener's Bell"
+bundle: research
+tags: [naming, branding, domain-check, trademark, research]
+accent_color: amber
+hero_image: "/images/name-audition-hero.jpg"
+auto_description: "Run candidate product, brand, company, or benchmark names through an audition — domain-availability checks, collision research, a light trademark and ownability read, and an interactive casting report of finalists with optional draft branding."
+auto_triggers: ["is this name taken", "help me pick a name", "name my product"]
+auto_tools: []
+auto_last_synced: "2026-06-01"
+auto_last_commit: "2026-06-01"
+auto_activity: []
+install_command: ""
+repo_path: "name-audition"
+dependencies: [whois, dig]
+---
+
+## What it does
+
+Runs a shortlist of candidate names through an audition: an authoritative domain-availability check (`whois` + `dig` across TLDs), collision research across SaaS/AI startups, GitHub/PyPI/npm, the target vertical, and trademarks, then ranks the survivors and builds an interactive "casting report" deck — with optional draft branding. It separates the three things people conflate: brandability, availability, and freedom from collisions.
+
+## Key features
+
+- **Authoritative domain checks** — a bundled `check_domains.sh` runs `whois` + `dig` (following IANA referrals) for a name × TLD availability table, not search-guessing.
+- **Adjacent-domain radar** — the failure mode that kills a name even when every domain is free: a competitor already in your vertical. The audition weights this highest.
+- **Ownability read** — flags descriptive or generic compounds that are domain-free but weak to trademark and SEO.
+- **Casting report** — an interactive deck (one slide per finalist) with domain and risk tables and a "cast it?" verdict.
+- **Optional draft branding** — wordmark and logo concepts per finalist via nano-banana or gpt-image-2.
+- **Benchmark mode** — when naming a research benchmark, it checks the literature (arXiv / ACL) for citation clashes instead of domains.
+
+## When to use
+
+When naming a product, app, company, feature, or benchmark — and before you commit, to pressure-test a shortlist against real availability, collisions, and trademark risk.
