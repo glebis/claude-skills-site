@@ -1,0 +1,39 @@
+---
+name: "cull"
+tagline: "Browse, curate, search, and export an AI-art image library via the Cull MCP."
+apothecary_name: "The Curator's Loupe"
+bundle: content-publishing
+tags: [image-library, curation, mcp, collections, export]
+accent_color: amber
+hero_image: "/images/cull-hero.jpg"
+auto_description: "Use when the user wants to view, review, rate, organize, search, or export images / AI-art generations and the Cull MCP server is connected."
+auto_triggers: ["show me these images", "review this batch", "find similar images"]
+auto_tools: []
+auto_last_synced: "2026-06-01"
+auto_last_commit: "2026-06-01"
+auto_activity: []
+install_command: ""
+repo_path: "cull"
+dependencies: [cull-mcp]
+---
+
+## What it does
+
+Wraps the Cull image-library app's MCP (~53 tools) into a usage map: import folders, browse, rate and decide, build manual and smart collections, run vision and quality analysis, find visually similar images via embeddings, and export or publish. It is a recipe layer over the MCP, not a reimplementation.
+
+## Key features
+
+- **Review in Cull, never Preview** — the core rule: display via `import_folder` → `navigate_to_folder` (or `show_collection` / `show_image`); never `open` image files.
+- **Curate fast** — rate, set keep/reject decisions, and gather favorites into manual or smart collections.
+- **Find-similar via embeddings** — surface visually related images (download the embedding model and generate embeddings first).
+- **Vision & quality passes** — object detection, search-by-object, and quality scoring across a whole library.
+- **Export & publish** — export presets, static publish packages, and clipboard publishing.
+- **Recipe-driven** — chained workflows for reviewing a batch, shortlisting and collecting, finding similar, running a quality pass, and exporting the keepers.
+
+## How it works
+
+Cull exposes its tools as `mcp__cull__*` over MCP; in Claude Code they are deferred, so the skill loads them with ToolSearch before calling and treats long operations (embeddings, analysis) as async jobs to poll.
+
+## When to use
+
+When you want to view, review, rate, organize, search, or export images / AI-art generations and the Cull MCP server is connected.
