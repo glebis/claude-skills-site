@@ -1,0 +1,62 @@
+---
+name: "confide"
+tagline: "Local-first de-identification toolkit — eight tools that redact, verify, restore, and store therapy transcripts without anything leaving your machine."
+apothecary_name: "The Redactor's Veil"
+bundle: thinking-strategy
+tags: [privacy, de-identification, pii, therapy, coaching, russian-nlp, plugin]
+accent_color: violet
+hero_image: "/images/confide-anon-hero.jpg"
+auto_description: "CONFIDE is a local-first de-identification toolkit packaged as a Claude Code plugin with eight namespaced skills (confide:setup, anon, red, rehydrate, view, audit, vault, annotate). It redacts PII from session transcripts with a layered stack (regex → Natasha RU NER → local LLM), emits a reversible map kept only on-device, checks residual re-identification risk, restores real values into a cloud analysis locally, and stores raw data behind three locks. Built from the bilingual RU/EN CONFIDE benchmark."
+auto_triggers: ["set up confide", "anonymize this transcript", "redact PII", "check residual re-id risk", "rehydrate the analysis", "audit my sessions for PII"]
+auto_tools: []
+auto_last_synced: "2026-06-03"
+auto_last_commit: "2026-06-03"
+auto_activity: []
+install_command: "/plugin install confide@glebis-skills"
+repo_path: "confide"
+dependencies: ["natasha", "scrubadub", "phonenumbers", "pymorphy2", "ollama", "qwen2.5:3b", "presidio-analyzer (optional)", "sops + age (optional, for vault)"]
+---
+
+## What it does
+
+CONFIDE turns the [bilingual RU/EN CONFIDE benchmark](https://github.com/glebis/confide) into a working toolkit: eight namespaced skills that de-identify session transcripts (therapy, coaching, supervision, consulting) and keep the secrets local. The detection stack runs in layers — regex for emails/URLs/phones/IDs/dates, Natasha for Russian named entities, and a local LLM (Ollama `qwen2.5:3b`) for quasi-identifiers — merging their spans into a single redacted **GREEN** copy. Nothing is sent to the cloud unless you explicitly opt in on already-redacted text.
+
+The toolkit's defining move is **reversible redaction**: `confide:anon` writes a structured map (`<name>.map.json`) that lives only on your disk, gitignored, never shipped. Redact a transcript, run the safe GREEN text through any cloud model, then `confide:rehydrate` puts the real names back locally — completing the round-trip without the cloud ever seeing a real identifier.
+
+## The eight tools
+
+<div class="confide-tools">
+
+- **confide:setup** — install the dependency stack, pull the local model, write optimal defaults so the rest works with zero config.
+  ![confide:setup](/images/confide-setup-hero.jpg)
+- **confide:anon** — redact PII locally and emit a reversible map (reserved sentinel grammar `[CONFIDE_PERSON_0001]`), with a counts-only stats summary.
+  ![confide:anon](/images/confide-anon-hero.jpg)
+- **confide:red** — residual re-identification **risk check** on redacted output: what an attacker could still single out, infer, or link (GDPR Art-29), qualitatively.
+  ![confide:red](/images/confide-red-hero.jpg)
+- **confide:rehydrate** — restore real values into a cloud analysis locally; robust to LLM placeholder mangling, never touches ordinary prose, idempotent.
+  ![confide:rehydrate](/images/confide-rehydrate-hero.jpg)
+- **confide:view** — a self-contained interactive HTML diff of original ↔ redacted ↔ restored, colour-coded by type, with All / None / Selected toggles.
+  ![confide:view](/images/confide-view-hero.jpg)
+- **confide:audit** — stats-only PII scan across a folder of sessions → aggregate report; never prints a transcript or a real value.
+  ![confide:audit](/images/confide-audit-hero.jpg)
+- **confide:vault** — operationalize the three locks (FileVault + encrypted store + `sops`/`age` per-file) for raw data, with a status checklist.
+  ![confide:vault](/images/confide-vault-hero.jpg)
+- **confide:annotate** — build a PII gold set with human annotators: a zero-install browser tool, a codebook, inter-annotator agreement (κ), and adjudication.
+  ![confide:annotate](/images/confide-annotate-hero.jpg)
+
+</div>
+
+## Key features
+
+- **Local-first by default** — raw text and the reversible map never leave the machine. Cloud use is opt-in and only on already-redacted GREEN text.
+- **Reversible round-trip** — redact → cloud-analyze the safe text → rehydrate locally. The map is the only artifact with original values, and it stays on disk (0600, gitignored).
+- **Russian + English** — Natasha is native Russian NER; the regex and LLM layers handle both, including morphological variants.
+- **Honest risk framing** — `confide:red` surfaces residual risk categories, not a recall score, with the caveat that *absence of a finding ≠ safety*. Dual-use guardrails: own data only.
+- **Stats-only at scale** — `confide:audit` reports counts and distributions across a corpus without ever emitting a name.
+- **Reproducible** — engine-agnostic transport (Ollama default, llama.cpp optional); 105 offline-deterministic tests; round-trip and trigger evals.
+
+## When to use
+
+Before sending any session transcript to a cloud model — pipe it through `confide:anon`, send the GREEN copy, then `confide:rehydrate` the result. Use `confide:red` to sanity-check what's still inferable, `confide:audit` to measure PII across a whole corpus, `confide:vault` to store raw data behind three locks, and `confide:annotate` to build a labelled gold set for evaluating any de-identifier. Useful for supervision prep, research datasets, and compliance with 152-FZ, GDPR, or HIPAA.
+
+> Built from the CONFIDE benchmark. This is the **tool** facet — run on your own data — not the scored benchmark. The plugin ships synthetic data only.
