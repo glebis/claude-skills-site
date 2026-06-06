@@ -1,0 +1,43 @@
+---
+name: "rigorous-experiments"
+tagline: "Pre-registered, permutation-exact experiments on personal time-series data."
+apothecary_name: "The Skeptic's Crucible"
+bundle: personal-analytics
+tags: [statistics, n-of-1, self-tracking, permutation-tests, data-validation, experiments]
+accent_color: amber
+hero_image: "/images/rigorous-experiments-hero.jpg"
+auto_description: "This skill should be used when designing, running, validating, or auditing statistical experiments on personal or observational time-series data (health metrics, speech/text corpora, behavioral logs, diaries"
+auto_triggers: ["design an experiment", "is this correlation real", "audit these findings"]
+auto_tools: []
+auto_last_synced: "2026-06-06"
+auto_last_commit: "2026-06-06"
+auto_activity: []
+install_command: ""
+repo_path: "rigorous-experiments"
+dependencies: [numpy]
+---
+
+## What it does
+
+Runs statistical experiments on personal time-series data — health metrics, speech and text corpora, behavioral logs, diaries — that survive scrutiny. Five chained modes (design, conduct, validate-data, cross-validate, audit) enforce pre-registration, exact permutation tests, fixed-family FDR correction, and adversarial review. Ships a battle-tested permutation-statistics module, an experiment linter as evals, and a launchable results explorer.
+
+## Key features
+
+- **Exact permutation discipline** — never sampled tests on small n; the bundled `perm_stats.py` enumerates all circular shifts over full calendars with missingness masks, and the linter flags the sampled-permutation pattern that once fabricated a flagship "q=0.028" finding
+- **Pre-registration enforcement** — hypotheses, tests, family size and thresholds go in the script docstring before the first run; the eval linter verifies it structurally (AST-level)
+- **Data-validation gate** — a 13-point checklist of real bug classes: zero-vs-missing conflation, dedup semantics, substring category traps, retention windows, timezone conventions, missingness mechanisms, positive and negative controls
+- **Cross-validation layers** — adversarial code review templates plus external-model review with privacy-screened archive packaging (statistics only, never raw text or audio)
+- **Audit machinery** — findings registries with honest statuses (confirmed / lead / null / descriptive), an impossible-p detector, and recorded status flips instead of silent edits
+- **Launchable results explorer** — one command serves any directory of results JSONs as a filterable, sortable viewer with confirmed/lead badges, verdicts and caveats
+
+## When to use
+
+When testing whether a correlation in self-tracked data is real, designing an n-of-1 experiment, onboarding a new personal data source, auditing past findings for statistical artifacts, or preparing results for review by another model or person.
+
+## Modes
+
+- **design** — pre-registered plans with family sizes, power sanity and controls
+- **conduct** — implementation with the exact-permutation module and honest results conventions
+- **validate-data** — the gate every new data source passes before analysis
+- **cross-validate** — adversarial code review and external-model review of major claims
+- **audit** — registries, recomputation, and status-flip provenance for past findings
