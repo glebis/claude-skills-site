@@ -1,0 +1,35 @@
+---
+name: "cmux"
+tagline: "Orchestrate workspaces, preview panes, and sidebar status in the cmux terminal."
+apothecary_name: "The Signal Switchboard"
+bundle: developer-tools
+tags: ["terminal","multiplexer","ai-agents","browser-preview","tmux","workflow"]
+accent_color: cyan
+hero_image: "/images/cmux-hero.jpg"
+auto_description: "Controls the cmux macOS terminal app (Ghostty-based, AI-agent-aware) via its CLI socket API. Use this skill to: open browser preview panes when a dev server starts or an HTML file is created; spin up named workspaces for parallel subagents; show live sidebar progress/status during long tasks; open utility splits on demand (logs, URLs, terminals) in any direction."
+auto_triggers: ["open in a new tab", "show preview", "open browser pane", "spin up subagent workspace", "show progress in sidebar"]
+auto_tools: []
+auto_last_synced: "2026-06-12"
+auto_last_commit: "2026-06-12"
+auto_activity: []
+install_command: ""
+repo_path: "cmux"
+dependencies: ["cmux"]
+---
+
+## What it does
+
+Controls the cmux macOS terminal app via its CLI socket API — opening browser preview panes, spawning named workspaces for parallel agents, and displaying live sidebar progress during long-running tasks. It treats the terminal as a programmable surface rather than a passive output window, letting Claude route different outputs to the right pane automatically.
+
+## Key features
+
+- **Auto preview routing** — detects when a dev server starts or an HTML file is created and opens a right-side browser pane without interrupting the main session
+- **Subagent workspaces** — each parallel agent gets its own named cmux workspace with colored status labels visible in the sidebar
+- **Live sidebar progress** — animates a progress bar through task phases (scan → process → synthesize) with `⌘I` log panel integration
+- **Utility splits on demand** — natural language like "open a log strip at the bottom" maps to `new-pane --direction down` with auto-resize
+- **tmux composability** — tmux sessions run inside cmux panes, combining tmux's persistent multi-window sessions with cmux's browser control and sidebar awareness
+- **Interactive demo mode** — `/cmux demo` runs a personalized 3-screen walkthrough tailored to your workflow and tmux experience
+
+## When to use
+
+When running inside cmux and any task would benefit from a browser preview, a parallel agent workspace, or visible sidebar feedback. Also use when the user invokes `/cmux demo` to explore capabilities interactively.
