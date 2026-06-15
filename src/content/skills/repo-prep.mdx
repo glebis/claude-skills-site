@@ -1,0 +1,35 @@
+---
+name: "repo-prep"
+tagline: "Interactively prepare a repo for publication — license, docs, authorship, compliance."
+apothecary_name: "The Notary's Workbench"
+bundle: developer-tools
+tags: ["git","github","license","authorship","compliance","open-source"]
+accent_color: amber
+hero_image: "/images/repo-prep-hero.jpg"
+auto_description: "Interactively prepare a code repository for publication — LICENSE, NOTICE, AUTHORSHIP, README sections, package metadata, .gitignore, community docs, .github templates, a promo block, and conditional EU/Germany legal compliance."
+auto_triggers: ["prepare this repo for GitHub", "add a license and authorship", "open-source this project"]
+auto_tools: []
+auto_last_synced: "2026-06-15"
+auto_last_commit: "2026-06-15"
+auto_activity: []
+install_command: ""
+repo_path: "repo-prep"
+dependencies: []
+---
+
+## What it does
+
+Scaffolds the legal, metadata, community, and compliance files a repository needs before going public — LICENSE (any SPDX id, MIT/BSD bundled offline and others fetched), NOTICE, AUTHORSHIP, package metadata, `.gitignore`, CONTRIBUTING/CODE_OF_CONDUCT/SECURITY/CHANGELOG, and `.github/` issue/PR/CI/dependabot templates. Everything is filled from a central author profile so identity, defaults, and a "more from the author" promo block stay consistent across every repo. Generation is interactive and idempotent: it detects what already exists, shows a plan, and never clobbers silently.
+
+## Key features
+
+- **Central author profile** — One source of truth for name, email, GitHub, default license, and promo links, reused across all repos
+- **Authorship wizard** — Builds a defensible `AUTHORSHIP.md` for AI-assisted work by interviewing across Decisions, Judgment, Goals & Direction, and Art Direction, gathering evidence from git history, ADRs, and AI session logs first
+- **Jurisdiction-aware legal framing** — Asks the operating jurisdiction up front (US / EU-Germany / UK) and writes the matching copyright posture; always flagged as not legal advice
+- **EU/Germany compliance** — Conditional, question-gated guidance on the Cyber Resilience Act, AI Act transparency, GDPR, the German Impressum (DDG), and the Product Liability Directive
+- **cenno-driven interviews** — Prefers cenno panels with voice input for the reflective authorship questions, falling back to standard prompts when cenno isn't installed
+- **Deterministic license writer** — A bundled script fills the copyright line for any SPDX license, offline for common ones and fetched from SPDX otherwise
+
+## When to use
+
+When setting up a new or existing repository for GitHub or open-sourcing, adding missing legal/metadata/community files, writing an authorship record for AI-assisted work, or checking what EU/Germany compliance a repo needs.
