@@ -1,0 +1,35 @@
+---
+name: "local-models"
+tagline: "Run quick, private LLM tasks offline via llama.cpp."
+apothecary_name: "The Cellarer's Still"
+bundle: developer-tools
+tags: ["llm", "local", "llama-cpp", "ollama", "offline", "privacy"]
+accent_color: amber
+hero_image: "/images/local-models-hero.jpg"
+auto_description: "Run quick, offline, private LLM tasks on local models via llama.cpp, reusing models already downloaded by Ollama: summarize, classify, extract JSON, anonymize PII, translate, embed, and describe images."
+auto_triggers: ["anonymize this text", "summarize this offline", "classify these locally"]
+auto_tools: []
+auto_last_synced: "2026-06-18"
+auto_last_commit: "2026-06-18"
+auto_activity: []
+install_command: ""
+repo_path: "local-models"
+dependencies: ["llama.cpp", "ollama", "python3"]
+---
+
+## What it does
+
+Gives quick command-line access to small local LLMs through llama.cpp, reusing the GGUF models already pulled by Ollama — no re-download, no API key, no per-token cost. An `lm` wrapper exposes one-shot prompting plus task presets (summarize, TL;DR, keywords, proofread, anonymize, translate, classify, extract-to-JSON), local embeddings, offline image description, and an OpenAI-compatible server. Everything runs on the machine.
+
+## Key features
+
+- **Reuses Ollama's downloads** — reads Ollama's manifests to resolve a friendly name like `qwen2.5:3b` straight to its on-disk GGUF blob, so llama.cpp loads it directly with zero duplication.
+- **Privacy-first presets** — `anonymize` redacts names, emails, phones and addresses into `[NAME]`/`[EMAIL]` placeholders without the text ever leaving the machine; ideal for transcripts and personal notes.
+- **Clean, scriptable output** — drives `llama-completion` in single-turn mode and strips the chat-template scaffolding and engine logs, so presets emit just the answer (a label, JSON, or prose) ready to pipe.
+- **Embeddings and local RAG** — `lm embed` returns OpenAI-style vectors from multilingual embedding models, with a minimal cosine-similarity retrieval pattern for offline search.
+- **Offline vision** — describes and tags images via a bundled vision model, auto-fetching the projector llama.cpp needs on first use, then running fully offline.
+- **Serve when you need speed** — `lm serve` keeps a model resident behind an OpenAI-compatible endpoint for high-volume or repeated calls.
+
+## When to use
+
+When a task is privacy-sensitive, must run offline, is high-volume and low-stakes, or just needs a fast throwaway answer — and a round-trip to a frontier cloud model would be overkill.
