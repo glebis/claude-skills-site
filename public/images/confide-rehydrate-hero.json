@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-03T22:06:08.068667",
+  "prompt": "A small ornate brass key beside an uncorked inkwell, a lifted corner of translucent vellum revealing the original handwriting restored beneath it, a slim mapping ledger open nearby, dark moody apothecary still-life on an aged wooden desk, antique cabinet of many small labeled drawers receding into deep shadow, brass instruments and wax seals, warm amber and sepia tones on a near-black background, single warm light source, strong chiaroscuro, faint pale-blue technical blueprint lines etched into the dark background, painterly photoreal, 35mm shallow depth of field, no readable text, no real names, no people",
+  "preset": null,
+  "platform": "square",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": 7043,
+  "output": "public/images/confide-rehydrate-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

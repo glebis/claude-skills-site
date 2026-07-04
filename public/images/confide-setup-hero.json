@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-03T21:57:32.880424",
+  "prompt": "An apothecary's bench being prepared for work: a row of empty glass bottles with blank labels, a brass mortar and pestle, a fresh open blank ledger, and small tools laid out neatly awaiting first use, dark moody apothecary still-life on an aged wooden desk, antique cabinet of many small labeled drawers receding into deep shadow, brass instruments and wax seals, warm amber and sepia tones on a near-black background, single warm light source, strong chiaroscuro, faint pale-blue technical blueprint lines etched into the dark background, painterly photoreal, 35mm shallow depth of field, no readable text, no real names, no people",
+  "preset": null,
+  "platform": "square",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": 7010,
+  "output": "public/images/confide-setup-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

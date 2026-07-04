@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-03T22:15:25.455322",
+  "prompt": "A small iron strongbox bound shut with three separate locks and wax seals, one brass key set deliberately apart on the desk, a locked drawer in the antique cabinet, dark moody apothecary still-life on an aged wooden desk, antique cabinet of many small labeled drawers receding into deep shadow, brass instruments and wax seals, warm amber and sepia tones on a near-black background, single warm light source, strong chiaroscuro, faint pale-blue technical blueprint lines etched into the dark background, painterly photoreal, 35mm shallow depth of field, no readable text, no real names, no people",
+  "preset": null,
+  "platform": "square",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": 7076,
+  "output": "public/images/confide-vault-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-03T22:03:17.491054",
+  "prompt": "A brass magnifying lens hovering low over a veiled, partly-redacted parchment as if trying to read through it, a single crimson wax seal and a thin red thread linking a few scattered clue-cards, subtle crimson accent, dark moody apothecary still-life on an aged wooden desk, antique cabinet of many small labeled drawers receding into deep shadow, brass instruments and wax seals, warm amber and sepia tones on a near-black background, single warm light source, strong chiaroscuro, faint pale-blue technical blueprint lines etched into the dark background, painterly photoreal, 35mm shallow depth of field, no readable text, no real names, no people",
+  "preset": null,
+  "platform": "square",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": 7032,
+  "output": "public/images/confide-red-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

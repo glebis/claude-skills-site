@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-03T22:12:33.431166",
+  "prompt": "A tall open ledger filled with neat rows of tally marks and counted figures beside a stack of wax-sealed folios, a brass abacus, every folio sealed shut so none of the writing shows, dark moody apothecary still-life on an aged wooden desk, antique cabinet of many small labeled drawers receding into deep shadow, brass instruments and wax seals, warm amber and sepia tones on a near-black background, single warm light source, strong chiaroscuro, faint pale-blue technical blueprint lines etched into the dark background, painterly photoreal, 35mm shallow depth of field, no readable text, no real names, no people",
+  "preset": null,
+  "platform": "square",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": 7065,
+  "output": "public/images/confide-audit-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

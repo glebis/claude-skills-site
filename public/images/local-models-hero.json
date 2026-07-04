@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-18T12:48:49.544462",
+  "prompt": "Scene: a dark apothecary cellar workbench lined with sealed pre-stocked storage jars and labeled drawers with abstract marks, brass piping between them, translucent developer terminal recipe cards. Subject: a compact copper distillation still drawing from a row of already-filled reagent jars, distilling glowing droplets into three small output vials marked with abstract glyphs for text, vector and image; thin electric-blue signal lines link the still to the terminal cards. Composition: wide 16:9, still and reagent-jar row centered-right, quiet dark negative space on the left, no border. Lighting: low raking desk light, sharp engraving detail, warm copper highlights. Style: dark apothecary workbench fused with developer terminal artifacts, hand-tinted copperplate engraving, technical diagram overlays, tactile paper grain, oxidized copper, medicinal green, ink brown, warm bone, tiny electric-blue signal accents. No readable words, no logos, no human figures, no brand marks, no modern UI screenshot, no generic chemistry set, no stock-photo look, no neon sci-fi.",
+  "preset": null,
+  "platform": "x",
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": null,
+  "output": "/Users/glebkalinin/ai_projects/claude-skills-site/public/images/local-models-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}

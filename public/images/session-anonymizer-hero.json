@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-05-06T00:29:46.909881",
+  "prompt": "A dark apothecary privacy chamber workbench in hand-tinted copperplate engraving style. A translucent gauze veil draped over scattered therapy session pages on a worn wooden desk, partially obscuring handwritten abstract marks beneath. Brass redaction stamps with abstract glyphs, a magnifying loupe examining one page edge. Three small glass vials of redaction ink arranged in a row, representing three detection layers. Fine electric-blue signal traces run along the veil's contact points with the documents \u2014 where the veil touches paper, marks fade into abstract patterns. Brass drawers with abstract label marks in background. Oxidized copper, medicinal green, ink brown, warm bone palette with tiny electric-blue accents. Technical diagram overlays, tactile paper grain texture. Wide 16:9 composition, subject centered-right, quiet dark negative space on left. Low raking desk light, sharp engraving detail, warm copper highlights. No readable words, no logos, no human figures, no modern UI, no neon sci-fi.",
+  "preset": null,
+  "platform": null,
+  "thinking": "off",
+  "quality": "high",
+  "provider": "openai",
+  "n": 1,
+  "seed": null,
+  "output": "/Users/glebkalinin/ai_projects/claude-skills-site/public/images/session-anonymizer-hero.jpg",
+  "project": null,
+  "estimated_cost": 0.21
+}
