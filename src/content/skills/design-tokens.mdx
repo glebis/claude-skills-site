@@ -1,0 +1,34 @@
+---
+name: "design-tokens"
+tagline: "DTCG design tokens compiled to CSS, DESIGN.md, and visual previews."
+apothecary_name: "The Pigment Ledger"
+bundle: content-publishing
+tags: ["design-tokens","design-systems","css","dtcg","branding"]
+accent_color: amber
+hero_image: "/images/design-tokens-hero.jpg"
+auto_description: "Set up, validate, resolve, and export design tokens following the DTCG (Design Tokens Community Group) Format Module 2025.10 standard. Define a set globally or per project and compile it."
+auto_triggers: ["set up design tokens","compile tokens to CSS","brand tokens"]
+auto_tools: []
+auto_last_synced: "2026-06-22"
+auto_last_commit: "2026-06-22"
+auto_activity: []
+install_command: ""
+repo_path: "design-tokens"
+dependencies: []
+---
+
+## What it does
+
+Manages design tokens — the named source of truth for colors, spacing, typography, and shadows — using the W3C Design Tokens Community Group (DTCG) 2025.10 standard, with a dependency-free Python core. From one canonical `*.tokens.json` it compiles CSS custom properties, a Google-Labs `DESIGN.md` (the format AI coding agents read), and a standalone HTML preview. It also imports an existing CSS file's `:root` variables straight into DTCG, preserving their names.
+
+## Key features
+
+- **Standard, not invented** — speaks DTCG 2025.10 throughout; output is plain DTCG so Figma, Style Dictionary, and Tokens Studio consume it directly.
+- **Two formats, one source** — emits CSS variables for code *and* a linter-clean `DESIGN.md` for Claude Code / Cursor / v0, both resolved from the same tokens.
+- **Global base + project overrides** — layer a project's deltas over a shared brand base; aliases resolve deterministically with cycle detection.
+- **CSS import door** — pull an existing stylesheet's custom properties into DTCG without hand-translation, names preserved for clean round-trips.
+- **Visual preview** — a standalone HTML swatch page (color chips, type specimens, spacing, rounded, shadow) to see a token set at a glance.
+
+## When to use
+
+When you want to define a brand or design system once — globally or per project — and have it stay consistent across code, AI-generated UI, and collaborators, instead of hardcoding hex values and fonts in scattered places.
