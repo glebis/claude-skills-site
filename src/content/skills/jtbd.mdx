@@ -12,29 +12,35 @@ auto_tools: []
 auto_last_synced: "2026-04-23"
 auto_last_commit: "2026-04-23"
 auto_activity: [0,0,0,0,0,0,0,0,0,0,0,24]
-install_command: ""
-repo_path: "jtbd"
+install_command: "npx skills add glebis/humane-agentic-design"
+repo_path: ""
 dependencies: []
+moved_to: "https://github.com/glebis/humane-agentic-design"
 ---
+
+> **This skill moved.** `jtbd` now ships in the
+> **[humane](https://github.com/glebis/humane-agentic-design)** plugin — a design method cycle
+> where it sits alongside the skills it hands off to.
+>
+> ```
+> npx skills add glebis/humane-agentic-design
+> ```
+>
+> In Claude Code:
+> ```
+> /plugin marketplace add glebis/humane-agentic-design
+> /plugin install humane@humane-agentic-design
+> ```
 
 ## What it does
 
-A structured Jobs-to-Be-Done interview engine that helps you articulate what you're building, for whom, and why — then outputs a decision-grade artifact bundle. Captures the four switching forces (Push, Pull, Habit, Anxiety) that determine whether people will actually adopt your product.
+Jobs-to-be-Done interviews, switching forces, and the corpus graph.
 
-## Modes
+## Why it moved
 
-- **Interview** (default) — live JTBD conversation producing a full artifact bundle
-- **Transcript ingest** — feed it an existing interview transcript for analysis
-- **Review mining** — extract JTBD insights from customer reviews (CSV/JSON)
-- **Update** — refine an existing JTBD brief with new data
+A skill published from two repositories drifts, and this one had. The copy that
+used to live here was frozen in 2026-07 and was missing the 11-view corpus graph and exec-summary reports.
 
-## Output artifacts
-
-- `jtbd.json` — machine-readable structured data
-- `one-pager.md` — shareable summary of the job, forces, and opportunity
-- `messaging-angles.md` — copy angles derived from the Switch forces
-- `gtm-brief.md` — go-to-market recommendations
-
-## When to use
-
-When you need to articulate what a project does and why it matters, figure out what to build next, convert customer interviews or reviews into actionable insights, or generate messaging for a product.
+Keeping it installable would have meant running the old behaviour while reading
+the current documentation — so this page now points at the maintained version
+instead of shipping a second one.

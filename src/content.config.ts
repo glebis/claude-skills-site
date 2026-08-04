@@ -22,6 +22,10 @@ const skills = defineCollection({
     install_command: z.string().default(""),
     repo_path: z.string().default(""),
     dependencies: z.array(z.string()).default([]),
+
+    // Set when a skill has moved to another repo. The page stays live at its
+    // original URL and points at the maintained version instead of 404ing.
+    moved_to: z.string().optional(),
   }),
 });
 

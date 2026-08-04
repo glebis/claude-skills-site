@@ -12,29 +12,35 @@ auto_tools: []
 auto_last_synced: "2026-07-04"
 auto_last_commit: "2026-07-04"
 auto_activity: []
-install_command: ""
-repo_path: "nielsen-heuristics"
+install_command: "npx skills add glebis/humane-agentic-design"
+repo_path: ""
 dependencies: ["linear CLI (optional)", "beads / bd (optional)", "tufte-report skill (optional)"]
+moved_to: "https://github.com/glebis/humane-agentic-design"
 ---
+
+> **This skill moved.** `nielsen-heuristics` now ships in the
+> **[humane](https://github.com/glebis/humane-agentic-design)** plugin — a design method cycle
+> where it sits alongside the skills it hands off to.
+>
+> ```
+> npx skills add glebis/humane-agentic-design
+> ```
+>
+> In Claude Code:
+> ```
+> /plugin marketplace add glebis/humane-agentic-design
+> /plugin install humane@humane-agentic-design
+> ```
 
 ## What it does
 
-Runs a formal heuristic evaluation of a design artifact against Jakob Nielsen's 10 usability heuristics (Nielsen & Molich 1990, refined 1994). It accepts five input types — screenshots, live URLs, codebases/HTML, interface descriptions, and JTBD/spec docs — and produces an evidence-backed report with per-finding severity, a max-severity rollup per heuristic, top-3 prioritized fixes, and a scoped verdict. The value over an ad-hoc "critique this UI" prompt is a consistent rubric plus honesty guards that stop the model from manufacturing agreeable findings.
+Evidence-backed heuristic usability evaluation.
 
-## Key features
+## Why it moved
 
-- **Two honest modes** — *evaluation* (screenshot/URL/codebase → 0–4 severity scores) vs. *design-risk review* (spec/JTBD → unscored risk flags), because you cannot score a "system status" that has no running system.
-- **Evidence discipline** — every finding must cite a locator (screenshot region, DOM selector, `file:line`, or quoted spec sentence); unevidenced findings are disallowed, which is what keeps the output from drifting into filler.
-- **Mandatory inventory step** — enumerates the screens, elements, and flows before judging, so the walk is structural rather than vibes-based.
-- **Scoped verdict** — never claims "ready to ship"; carries the caveat that a single evaluator finds only ~1/3 of usability problems.
-- **Two output formats** — plain markdown by default, or a Tufte-style standalone HTML report (severity strip-chart, verdict dashboard, per-finding flyouts).
-- **Task export** — turns findings above a severity threshold (default ≥ 3) into Linear or Beads (`bd`) issues, after a propose-then-confirm gate.
+A skill published from two repositories drifts, and this one had. The copy that
+used to live here was frozen in 2026-07 and was missing the shared review contract that consolidates it with the other humane skills.
 
-## Modes
-
-- **Evaluation mode** — for artifacts with an observable interface. Findings get a Nielsen 0–4 severity (frequency × impact × persistence), grouped by heuristic.
-- **Design-risk review mode** — for specs and JTBD docs describing an interface that doesn't exist yet. Reframes each heuristic as "which principle does this design direction put at risk when built," with unscored, evidence-quoted risk flags.
-
-## When to use
-
-When you want a rigorous usability review — a "heuristic evaluation," "Nielsen check," or "UX audit" — of a screenshot, live page, codebase UI, interface description, or JTBD/spec, and you want the findings scored, evidenced, and optionally filed as tasks rather than delivered as a vague critique.
+Keeping it installable would have meant running the old behaviour while reading
+the current documentation — so this page now points at the maintained version
+instead of shipping a second one.
